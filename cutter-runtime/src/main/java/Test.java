@@ -25,14 +25,17 @@ public class Test {
 
     @Cut(ACut.class)
     public void AMethod() {
-        System.out.println("hello");
+        System.out.println("a method was called");
+    }
+
+    private void anotherMethod() {
+
     }
 
 
     public static void main(String[] args) {
         System.out.println("main");
         Test t = new Test();
-        t.AMethod2();
         t.AMethod();
     }
 }

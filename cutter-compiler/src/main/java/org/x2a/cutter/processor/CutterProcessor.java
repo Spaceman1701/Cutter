@@ -7,6 +7,7 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import org.x2a.cutter.processor.javac.MethodTranslator;
+import org.x2a.cutter.processor.javac.TreeFactory;
 import sun.reflect.generics.tree.Tree;
 
 import javax.annotation.processing.*;
@@ -32,7 +33,7 @@ public class CutterProcessor extends AbstractProcessor {
         this.trees = Trees.instance(javacEnv);
         TreeMaker treeMaker = TreeMaker.instance(javacEnv.getContext());
         JavacElements elements = JavacElements.instance(javacEnv.getContext());
-        treeTranslator = new MethodTranslator(treeMaker, elements);
+        treeTranslator = new MethodTranslator(treeMaker, elements, new TreeFactory(treeMaker, elements, javacEnv));
     }
 
     @Override
