@@ -36,7 +36,7 @@ public class CutterProcessor extends AbstractProcessor {
 
         TreeFactory treeFactory = new TreeFactory(javacEnv);
 
-        treeTranslator = new MethodTranslator(treeMaker, elements, treeFactory);
+        treeTranslator = new MethodTranslator(treeFactory);
     }
 
     @Override

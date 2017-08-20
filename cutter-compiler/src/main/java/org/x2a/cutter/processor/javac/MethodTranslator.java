@@ -10,18 +10,11 @@ import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.annotation.Cut;
 
-import java.util.ArrayList;
-
-
 public class MethodTranslator extends TreeTranslator {
 
-    private final TreeMaker treeMaker;
-    private final JavacElements elements;
     private final TreeFactory factory;
 
-    public MethodTranslator(TreeMaker maker, JavacElements elements, TreeFactory factory) {
-        this.treeMaker = maker;
-        this.elements = elements;
+    public MethodTranslator(TreeFactory factory) {
         this.factory = factory;
     }
 
@@ -34,7 +27,7 @@ public class MethodTranslator extends TreeTranslator {
                JCTree.JCMethodDecl methodDecl = (JCTree.JCMethodDecl) tree;
                if (Utils.isAnnotatedWith(methodDecl, Cut.class)) {
                    Name oldName = methodDecl.name;
-                   methodDecl.name = elements.getName("__wrapped__" + oldName.toString());
+                   methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
 
 
                    JCBlock newBody = createMethodBody(methodDecl.name);
