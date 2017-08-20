@@ -25,11 +25,13 @@ public class Test {
 
     @Cut(ACut.class)
     public void AMethod() {
-
+        System.out.println("hello");
     }
 
 
     public static void main(String[] args) {
         System.out.println("main");
+        Test t = new Test();
+        t.AMethod2();
     }
 }

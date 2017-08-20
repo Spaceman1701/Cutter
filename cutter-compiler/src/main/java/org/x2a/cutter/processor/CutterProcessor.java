@@ -1,6 +1,7 @@
 package org.x2a.cutter.processor;
 
 import com.sun.source.util.Trees;
+import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeMaker;
@@ -30,7 +31,8 @@ public class CutterProcessor extends AbstractProcessor {
         this.javacEnv = (JavacProcessingEnvironment) env;
         this.trees = Trees.instance(javacEnv);
         TreeMaker treeMaker = TreeMaker.instance(javacEnv.getContext());
-        treeTranslator = new MethodTranslator();
+        JavacElements elements = JavacElements.instance(javacEnv.getContext());
+        treeTranslator = new MethodTranslator(treeMaker, elements);
     }
 
     @Override
