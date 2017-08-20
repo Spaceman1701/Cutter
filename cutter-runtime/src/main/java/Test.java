@@ -33,5 +33,6 @@ public class Test {
         System.out.println("main");
         Test t = new Test();
         t.AMethod2();
+        t.AMethod();
     }
 }
