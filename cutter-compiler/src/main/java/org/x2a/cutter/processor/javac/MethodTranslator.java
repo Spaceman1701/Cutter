@@ -54,10 +54,17 @@ public class MethodTranslator extends TreeTranslator {
                                                         List<JCTree.JCExpression> thrown,
                                                         JCTree.JCBlock body,
                                                         JCTree.JCExpression defaultValue) {
-        List<JCStatement> statements = factory.List();
-        statements = statements.append(toStatement(newMethodCall(treeMaker.Ident(elements.getName("AMethod2")))));
-        JCBlock newBody = treeMaker.Block(0, statements);
+        JCBlock newBody = createMethodBody();
         return treeMaker.MethodDef(mods, name, returnType, parameterTypes, params, thrown, newBody, defaultValue);
+    }
+
+
+    private JCBlock createMethodBody() {
+        List<JCStatement> statements = factory.List();
+        JCMethodInvocation methodInvocation =
+                factory.createMethodInvocation(List.nil(), factory.Ident(factory.getName("AMethod2")), List.nil());
+        statements = statements.append(factory.Exec(methodInvocation));
+        return factory.Block(0, statements);
     }
 
     private JCMethodInvocation newMethodCall(JCExpression fn) {

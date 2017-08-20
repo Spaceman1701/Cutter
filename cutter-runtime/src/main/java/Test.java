@@ -3,6 +3,8 @@ import org.x2a.cutter.cut.Action;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.PointCut;
 
+import java.util.Arrays;
+
 public class Test {
 
 
@@ -25,7 +27,7 @@ public class Test {
 
     @Cut(ACut.class)
     public void AMethod() {
-        System.out.println("a method was called");
+        System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
     }
 
     private void anotherMethod() {

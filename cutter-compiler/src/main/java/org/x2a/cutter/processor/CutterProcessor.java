@@ -33,7 +33,10 @@ public class CutterProcessor extends AbstractProcessor {
         this.trees = Trees.instance(javacEnv);
         TreeMaker treeMaker = TreeMaker.instance(javacEnv.getContext());
         JavacElements elements = JavacElements.instance(javacEnv.getContext());
-        treeTranslator = new MethodTranslator(treeMaker, elements, new TreeFactory(treeMaker, elements, javacEnv));
+
+        TreeFactory treeFactory = new TreeFactory(javacEnv);
+
+        treeTranslator = new MethodTranslator(treeMaker, elements, treeFactory);
     }
 
     @Override
