@@ -8,6 +8,7 @@ import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
+import org.x2a.cutter.annotation.Cut;
 
 import java.util.ArrayList;
 
@@ -31,14 +32,15 @@ public class MethodTranslator extends TreeTranslator {
         for (JCTree tree : classDec.getMembers()) {
             if (tree.getKind() == Tree.Kind.METHOD) {
                JCTree.JCMethodDecl methodDecl = (JCTree.JCMethodDecl) tree;
-               if (methodDecl.getName().toString().contains("AMethod")) {
+               if (Utils.isAnnotatedWith(methodDecl, Cut.class)) {
                    Name oldName = methodDecl.name;
-                   methodDecl.name = elements.getName("AMethod2");
+                   methodDecl.name = elements.getName("__wrapped__" + oldName.toString());
 
 
-                   JCTree.JCMethodDecl newMethod = getNewMethodDeclaration(methodDecl.mods,
-                           oldName, methodDecl.restype, methodDecl.typarams, methodDecl.params, methodDecl.thrown,
-                           methodDecl.body, methodDecl.defaultValue);
+                   JCBlock newBody = createMethodBody(methodDecl.name);
+                   JCMethodDecl newMethod =
+                           factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
+                                   methodDecl.params, methodDecl.thrown, newBody, methodDecl.defaultValue);
                    classDec.defs = classDec.defs.append(newMethod);
                }
             }
@@ -46,36 +48,11 @@ public class MethodTranslator extends TreeTranslator {
         result = classDec;
     }
 
-    private JCTree.JCMethodDecl getNewMethodDeclaration(JCTree.JCModifiers mods,
-                                                        Name name,
-                                                        JCTree.JCExpression returnType,
-                                                        List<JCTree.JCTypeParameter> parameterTypes,
-                                                        List<JCTree.JCVariableDecl> params,
-                                                        List<JCTree.JCExpression> thrown,
-                                                        JCTree.JCBlock body,
-                                                        JCTree.JCExpression defaultValue) {
-        JCBlock newBody = createMethodBody();
-        return treeMaker.MethodDef(mods, name, returnType, parameterTypes, params, thrown, newBody, defaultValue);
-    }
-
-
-    private JCBlock createMethodBody() {
+    private JCBlock createMethodBody(Name name) {
         List<JCStatement> statements = factory.List();
         JCMethodInvocation methodInvocation =
-                factory.createMethodInvocation(List.nil(), factory.Ident(factory.getName("AMethod2")), List.nil());
+                factory.createMethodInvocation(List.nil(), factory.Ident(name), List.nil());
         statements = statements.append(factory.Exec(methodInvocation));
         return factory.Block(0, statements);
-    }
-
-    private JCMethodInvocation newMethodCall(JCExpression fn) {
-        return treeMaker.Apply(List.nil(), fn, List.nil());
-    }
-
-    private JCBlock newBlock(List<JCStatement> stms) {
-        return treeMaker.Block(0, stms);
-    }
-
-    private JCStatement toStatement(JCExpression expression) {
-        return treeMaker.Exec(expression);
     }
 }
