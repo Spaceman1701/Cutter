@@ -5,15 +5,15 @@ package org.x2a.cutter.cut;
  */
 public abstract class PointCut<RETURN_TYPE> {
 
-    protected final JoinPoint joinPoint;
+    //protected final JoinPoint joinPoint;
 
     /**
      * Creates a PointCut instance
      * @param joinPoint the join point where this point cut was created
      */
-    public PointCut(final JoinPoint joinPoint) {
-        this.joinPoint = joinPoint;
-    }
+//    public PointCut(final JoinPoint joinPoint) {
+//        this.joinPoint = joinPoint;
+//    }
 
     /**
      * Executed before the method the point cut is targeting is invoked (and before the stack frame is allocated)

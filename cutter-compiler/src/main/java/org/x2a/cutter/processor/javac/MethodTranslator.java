@@ -29,8 +29,8 @@ public class MethodTranslator extends TreeTranslator {
                    Name oldName = methodDecl.name;
                    methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
 
-
-                   JCBlock newBody = createMethodBody(methodDecl.name);
+                   JCNewClass pointCutCreation = pointCutNewClass(Utils.getAnnotation(methodDecl, Cut.class));
+                   JCBlock newBody = createMethodBody(methodDecl.name, factory.Exec(pointCutCreation));
                    JCMethodDecl newMethod =
                            factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
                                    methodDecl.params, methodDecl.thrown, newBody, methodDecl.defaultValue);
@@ -41,11 +41,17 @@ public class MethodTranslator extends TreeTranslator {
         result = classDec;
     }
 
-    private JCBlock createMethodBody(Name name) {
+    private JCNewClass pointCutNewClass(JCAnnotation annotation) {
+        JCIdent clazz = Utils.getPointCut(annotation);
+        return factory.NewClass(null, List.nil(), clazz, List.nil(), null);
+    }
+
+    private JCBlock createMethodBody(Name name, JCStatement statement) {
         List<JCStatement> statements = factory.List();
         JCMethodInvocation methodInvocation =
                 factory.createMethodInvocation(List.nil(), factory.Ident(name), List.nil());
         statements = statements.append(factory.Exec(methodInvocation));
+        statements = statements.append(statement);
         return factory.Block(0, statements);
     }
 }

@@ -104,4 +104,18 @@ public class TreeFactory { //TODO: This class should handle more things and it s
     public JCBlock Block(long flags, List<JCStatement> statements) {
         return maker.Block(flags, statements);
     }
+
+
+    /**
+     * Creates a new Class expression
+     * @param encl not entirely sure.. maybe for inner classes
+     * @param typeargs type arguments
+     * @param clazz class expression (ex: class identity expression)
+     * @param args constructor args
+     * @param classDecl Not sure... maybe for anonymous class decs
+     * @return
+     */
+    public JCNewClass NewClass(JCExpression encl, List<JCExpression> typeargs, JCExpression clazz, List<JCExpression> args, JCClassDecl classDecl) {
+        return maker.NewClass(encl, typeargs, clazz, args, classDecl);
+    }
 }

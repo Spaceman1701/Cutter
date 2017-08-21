@@ -9,8 +9,11 @@ public class Test {
 
 
     public static class ACut extends PointCut<Object> {
-        public ACut(JoinPoint joinPoint) {
-            super(joinPoint);
+//        public ACut(JoinPoint joinPoint) {
+//            super(joinPoint);
+//        }
+        public ACut() {
+            System.out.println("ACut was created!");
         }
 
         @Override
@@ -31,7 +34,6 @@ public class Test {
     }
 
     private void anotherMethod() {
-
     }
 
 
