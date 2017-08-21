@@ -30,6 +30,8 @@ public class Test {
 
     @Cut(ACut.class)
     public void AMethod() {
+        int i = 6;
+        System.out.println(i);
         System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
     }
 
