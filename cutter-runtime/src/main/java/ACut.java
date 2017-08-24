@@ -1,6 +1,6 @@
 import org.x2a.cutter.cut.PointCut;
 
-public class ACut extends PointCut<Object> {
+public class ACut extends PointCut<Void> {
     //        public ACut(JoinPoint joinPoint) {
 //            super(joinPoint);
 //        }
@@ -15,7 +15,12 @@ public class ACut extends PointCut<Object> {
     }
 
     @Override
-    public Object after(Object[] args) {
+    public Void after() {
+        return null;
+    }
+
+    @Override
+    public Void onSkip() {
         return null;
     }
 }
