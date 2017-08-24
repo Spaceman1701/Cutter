@@ -118,4 +118,41 @@ public class TreeFactory { //TODO: This class should handle more things and it s
     public JCNewClass NewClass(JCExpression encl, List<JCExpression> typeargs, JCExpression clazz, List<JCExpression> args, JCClassDecl classDecl) {
         return maker.NewClass(encl, typeargs, clazz, args, classDecl);
     }
+
+    /**
+     * Create a variable or field assignment
+     * @param to the expression to which is being assigned
+     * @param val the value to assign
+     * @return the assignment expression
+     */
+    public JCAssign Assign(JCExpression to, JCExpression val) {
+        return maker.Assign(to, val);
+    }
+
+    /**
+     * Create a conditional expression
+     * @param condition the condition expression
+     * @param thenExpression the then expression
+     * @param elseExpression the else expression
+     * @return a conditional expression
+     */
+    public JCConditional Conditional(JCExpression condition, JCExpression thenExpression, JCExpression elseExpression) {
+        return maker.Conditional(condition, thenExpression, elseExpression);
+    }
+
+    /**
+     *
+     * @param mods mods
+     * @param name name
+     * @param type var type
+     * @param init init to
+     * @return variable declaration
+     */
+    public JCVariableDecl VariableDeclaration(JCModifiers mods, Name name, JCExpression type, JCExpression init) {
+        return maker.VarDef(mods, name, type, init);
+    }
+
+    public JCModifiers Modifiers(long flags) {
+        return maker.Modifiers(flags);
+    }
 }

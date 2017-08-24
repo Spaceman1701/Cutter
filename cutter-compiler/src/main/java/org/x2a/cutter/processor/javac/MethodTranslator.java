@@ -1,6 +1,7 @@
 package org.x2a.cutter.processor.javac;
 
 import com.sun.source.tree.Tree;
+import com.sun.tools.javac.code.Flags;
 import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.*;
@@ -29,8 +30,8 @@ public class MethodTranslator extends TreeTranslator {
                    Name oldName = methodDecl.name;
                    methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
 
-                   JCNewClass pointCutCreation = pointCutNewClass(Utils.getAnnotation(methodDecl, Cut.class));
-                   JCBlock newBody = createMethodBody(methodDecl.name, factory.Exec(pointCutCreation));
+                   JCStatement pointCutCreation = pointCutVar(Utils.getAnnotation(methodDecl, Cut.class));
+                   JCBlock newBody = createMethodBody(methodDecl.name, pointCutCreation);
                    JCMethodDecl newMethod =
                            factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
                                    methodDecl.params, methodDecl.thrown, newBody, methodDecl.defaultValue);
@@ -39,6 +40,11 @@ public class MethodTranslator extends TreeTranslator {
             }
         }
         result = classDec;
+    }
+
+    private JCVariableDecl pointCutVar(JCAnnotation annotation) {
+        JCNewClass newClass = pointCutNewClass(annotation);
+        return factory.VariableDeclaration(factory.Modifiers(Flags.FINAL), factory.getName("pointCut"), newClass.clazz, newClass);
     }
 
     private JCNewClass pointCutNewClass(JCAnnotation annotation) {
