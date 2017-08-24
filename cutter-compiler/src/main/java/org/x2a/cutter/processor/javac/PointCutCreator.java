@@ -58,15 +58,16 @@ class PointCutCreator {
      */
     JCMethodDecl createMethod() {
         final JCBlock body = chooseBodyCreator().createMethodBody();
-        return null;
+        return factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
+                methodDecl.params, methodDecl.thrown, body, methodDecl.defaultValue);
     }
 
     private WrapperBodyCreator chooseBodyCreator() {
         JCNewClass pointCutNewClassNode = createPointCutNewClass();
         if (methodDecl.restype.type instanceof Type.JCVoidType) {
-            return new VoidBodyCreator(factory, pointCutNewClassNode, oldName);
+            return new VoidBodyCreator(factory, pointCutNewClassNode, methodDecl.name);
         } else {
-            return new ReturningBodyCreator(factory, pointCutNewClassNode, oldName);
+            return new ReturningBodyCreator(factory, pointCutNewClassNode, methodDecl.name);
         }
     }
 

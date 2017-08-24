@@ -47,6 +47,10 @@ public class TreeFactory { //TODO: This class should handle more things and it s
         return Ident(getName(name));
     }
 
+    public JCLiteral Null() {
+        return maker.Literal("null");
+    }
+
     /**
      * Creates a basic statement for the given expression
      */
@@ -140,6 +144,14 @@ public class TreeFactory { //TODO: This class should handle more things and it s
         return maker.Conditional(condition, thenExpression, elseExpression);
     }
 
+    public JCIf If(JCExpression condition, JCStatement thenStmt, JCStatement elseStmt) {
+        return maker.If(condition, thenStmt, elseStmt);
+    }
+
+    public JCSkip Skip() {
+        return maker.Skip();
+    }
+
     /**
      *
      * @param mods mods
@@ -151,6 +163,16 @@ public class TreeFactory { //TODO: This class should handle more things and it s
     public JCVariableDecl VariableDeclaration(JCModifiers mods, Name name, JCExpression type, JCExpression init) {
         return maker.VarDef(mods, name, type, init);
     }
+
+    /**
+     * Create a field accessor (used for methods too)
+     * @param selected the object from which the field is selected
+     * @param name the field name
+     */
+    public JCFieldAccess FieldAccess(JCExpression selected, Name name) {
+        return maker.Select(selected, name);
+    }
+
 
     public JCModifiers Modifiers(long flags) {
         return maker.Modifiers(flags);

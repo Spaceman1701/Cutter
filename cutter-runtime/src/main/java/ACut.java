@@ -1,4 +1,3 @@
-import org.x2a.cutter.cut.Action;
 import org.x2a.cutter.cut.PointCut;
 
 public class ACut extends PointCut<Object> {
@@ -10,8 +9,9 @@ public class ACut extends PointCut<Object> {
     }
 
     @Override
-    public Action before(Object[] args) {
-        return null;
+    public boolean before() {
+        System.out.println("before was called!");
+        return true;
     }
 
     @Override

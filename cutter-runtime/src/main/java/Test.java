@@ -8,6 +8,8 @@ public class Test {
 
     @Cut(ACut.class)
     public void AMethod() {
+        Object o = null;
+        System.out.println(o);
         int i = 6;
         System.out.println(i);
         System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));

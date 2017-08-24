@@ -27,37 +27,19 @@ public class MethodTranslator extends TreeTranslator {
             if (tree.getKind() == Tree.Kind.METHOD) {
                JCTree.JCMethodDecl methodDecl = (JCTree.JCMethodDecl) tree;
                if (Utils.isAnnotatedWith(methodDecl, Cut.class)) {
-                   Name oldName = methodDecl.name;
-                   methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
-
-                   JCStatement pointCutCreation = pointCutVar(Utils.getAnnotation(methodDecl, Cut.class));
-                   JCBlock newBody = createMethodBody(methodDecl.name, pointCutCreation);
-                   JCMethodDecl newMethod =
-                           factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
-                                   methodDecl.params, methodDecl.thrown, newBody, methodDecl.defaultValue);
-                   classDec.defs = classDec.defs.append(newMethod);
+                   classDec.defs = classDec.defs.append(renameAndCreateWrapper(methodDecl));
                }
             }
         }
         result = classDec;
     }
 
-    private JCVariableDecl pointCutVar(JCAnnotation annotation) {
-        JCNewClass newClass = pointCutNewClass(annotation);
-        return factory.VariableDeclaration(factory.Modifiers(Flags.FINAL), factory.getName("pointCut"), newClass.clazz, newClass);
+    private JCMethodDecl renameAndCreateWrapper(JCMethodDecl methodDecl) {
+        Name oldName = methodDecl.name;
+        methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
+        PointCutCreator methodCreator = new PointCutCreator(factory, methodDecl, oldName, Utils.getAnnotation(methodDecl, Cut.class));
+        JCMethodDecl newMethod = methodCreator.createMethod();
+        return newMethod;
     }
 
-    private JCNewClass pointCutNewClass(JCAnnotation annotation) {
-        JCIdent clazz = Utils.getPointCut(annotation);
-        return factory.NewClass(null, List.nil(), clazz, List.nil(), null);
-    }
-
-    private JCBlock createMethodBody(Name name, JCStatement statement) {
-        List<JCStatement> statements = factory.List();
-        JCMethodInvocation methodInvocation =
-                factory.createMethodInvocation(List.nil(), factory.Ident(name), List.nil());
-        statements = statements.append(factory.Exec(methodInvocation));
-        statements = statements.append(statement);
-        return factory.Block(0, statements);
-    }
 }

@@ -21,7 +21,7 @@ public abstract class PointCut<RETURN_TYPE> {
      * @return An Action - either INVOKE or SKIP. If INVOKE, the method will be invoked. If skip, the method call will be skipped.
      * Skipping a method will cause the {@link PointCut#after(Object[])} method to not be called.
      */
-    public abstract Action before(Object[] args);
+    public abstract boolean before();
 
     /**
      * Executed after the method the PointCut targets is called (and after the stack frame is cleared)
