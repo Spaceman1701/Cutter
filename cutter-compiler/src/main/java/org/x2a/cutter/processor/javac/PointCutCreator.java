@@ -5,10 +5,13 @@ import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
+import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.processor.javac.TreeFactory;
 import org.x2a.cutter.processor.javac.Utils;
+import org.x2a.cutter.processor.javac.method.ReturningBodyCreator;
+import org.x2a.cutter.processor.javac.method.VoidBodyCreator;
+import org.x2a.cutter.processor.javac.method.WrapperBodyCreator;
 
-import javax.naming.Name;
 
 /**
  * Creates the method for a cut method
@@ -54,28 +57,17 @@ class PointCutCreator {
         pointCut.onSkip();
      */
     JCMethodDecl createMethod() {
-        final JCBlock body;
-        if (methodDecl.restype.type instanceof Type.JCVoidType) {
-            body = createVoidMethodBody();
-        } else {
-            body = createReturningMethodBody();
-        }
+        final JCBlock body = chooseBodyCreator().createMethodBody();
         return null;
     }
 
-    private JCBlock createVoidMethodBody() {
-        statements.append(createPointCutVar());
-        return factory.Block(statements);
-    }
-
-    private JCBlock createReturningMethodBody() {
-        statements.append(createPointCutVar());
-        return factory.Block(0, statements);
-    }
-
-    private JCStatement createPointCutVar() {
-        JCNewClass newClass = createPointCutNewClass();
-        return factory.VariableDeclaration(factory.Modifiers(Flags.FINAL), factory.getName(POINT_CUT_VAR_NAME), newClass.clazz, newClass);
+    private WrapperBodyCreator chooseBodyCreator() {
+        JCNewClass pointCutNewClassNode = createPointCutNewClass();
+        if (methodDecl.restype.type instanceof Type.JCVoidType) {
+            return new VoidBodyCreator(factory, pointCutNewClassNode, oldName);
+        } else {
+            return new ReturningBodyCreator(factory, pointCutNewClassNode, oldName);
+        }
     }
 
     private JCNewClass createPointCutNewClass() {
