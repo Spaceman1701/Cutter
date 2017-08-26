@@ -174,6 +174,15 @@ public class TreeFactory { //TODO: This class should handle more things and it s
     }
 
 
+
+    public JCNewArray ArrayInitalizer(JCExpression type, List<JCExpression> dims, List<JCExpression> elements) {
+        return maker.NewArray(type, dims, elements);
+    }
+
+    public JCLiteral Literal(String s) {
+        return maker.Literal(s);
+    }
+
     public JCModifiers Modifiers(long flags) {
         return maker.Modifiers(flags);
     }

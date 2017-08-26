@@ -8,7 +8,8 @@ import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.processor.javac.TreeFactory;
 
 public abstract class WrapperBodyCreator {
-    protected static final String POINT_CUT_VAR_NAME = "pointCut";
+    public static final String GENERATED_VAR_PREFIX = "___generated_var__";
+    protected static final String POINT_CUT_VAR_NAME = GENERATED_VAR_PREFIX + "pointCut";
 
     protected final JCNewClass pointCutClass;
     protected final TreeFactory factory;

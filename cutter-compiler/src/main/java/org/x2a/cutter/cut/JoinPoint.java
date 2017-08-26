@@ -17,4 +17,9 @@ public class JoinPoint {
     public String getMethodName() {
         return methodName;
     }
+
+    @Override
+    public String toString() {
+        return clazz + "::" + methodName;
+    }
 }

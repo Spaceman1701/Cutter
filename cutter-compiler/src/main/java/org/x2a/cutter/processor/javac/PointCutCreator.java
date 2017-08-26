@@ -17,9 +17,6 @@ import org.x2a.cutter.processor.javac.method.WrapperBodyCreator;
  * Creates the method for a cut method
  */
 class PointCutCreator {
-
-    private static final String POINT_CUT_VAR_NAME = "pointCut";
-
     private final TreeFactory factory;
     private final JCMethodDecl methodDecl;
     private final Name oldName;
@@ -63,7 +60,7 @@ class PointCutCreator {
     }
 
     private WrapperBodyCreator chooseBodyCreator() {
-        JCNewClass pointCutNewClassNode = createPointCutNewClass();
+        JCNewClass pointCutNewClassNode = createPointCutNewClass(methodDecl.params);
         if (methodDecl.restype.type instanceof Type.JCVoidType) {
             return new VoidBodyCreator(factory, pointCutNewClassNode, methodDecl.name);
         } else {
@@ -71,11 +68,70 @@ class PointCutCreator {
         }
     }
 
-    private JCNewClass createPointCutNewClass() {
+    private JCNewClass createPointCutNewClass(List<JCVariableDecl> params) {
         JCIdent clazz = Utils.getPointCut(annotation);
-        return factory.NewClass(null, List.nil(), clazz, List.nil(), null);
+        return factory.NewClass(null, List.nil(), clazz, createPointCutArgs(params), null);
     }
 
+    private List<JCExpression> createPointCutArgs(List<JCVariableDecl> params) {
+        return List.of(createJoinPoint());
+    }
+
+    private JCMethodInvocation createParameterArray(List<JCVariableDecl> params) {
+        JCNewArray paramArray = getParameterObjectArray(params);
+        JCFieldAccess methodFieldAccess = getCutUtilsField("toParameters");
+        return factory.createMethodInvocation(factory.List(), methodFieldAccess, List.of(paramArray));
+    }
+
+
+    private JCMethodInvocation createJoinPoint() {
+        JCLiteral methodName = factory.Literal(oldName.toString());
+        JCMethodInvocation clazzMethod = factory.createMethodInvocation(factory.List(), factory.Ident("getClass"), factory.List());
+
+        JCFieldAccess factoryMethodField = getCutUtilsField("createJoinPoint");
+
+        return factory.createMethodInvocation(List.nil(), factoryMethodField, List.of(clazzMethod, methodName));
+    }
+
+    private JCFieldAccess getCutUtilsField(String name) {
+        JCFieldAccess cutUtils = factory.FieldAccess(factory.Ident("Cut"), factory.getName("Utils"));
+        return factory.FieldAccess(cutUtils, factory.getName(name));
+    }
+
+    private JCNewArray getParameterObjectArray(List<JCVariableDecl> params) {
+        List<JCExpression> arrayValues = factory.List();
+
+        for (int i = 0; i < params.length() * 3; i++) {
+            JCVariableDecl var = params.get(i / 3);
+            JCLiteral nameLiteral = factory.Literal(var.name.toString());
+            JCExpression classExpression = getVarTypeExpression(var);
+            JCIdent varIdentifier = factory.Ident(var.name);
+
+            arrayValues = arrayValues.append(nameLiteral).append(classExpression).append(varIdentifier);
+        }
+
+        return factory.ArrayInitalizer(factory.Ident("Object"), factory.List(), arrayValues);
+    }
+
+
+    private JCExpression getVarTypeExpression(JCVariableDecl var) {
+        JCExpression typeExpression = var.vartype;
+        if (typeExpression instanceof JCPrimitiveTypeTree) {
+            return resolvePrimitiveTypeTree((JCPrimitiveTypeTree) typeExpression);
+        } else {
+            return createGetClassExpression(var);
+        }
+    }
+
+    private JCExpression createGetClassExpression(JCVariableDecl var) {
+        JCFieldAccess getClassFieldAccessor = factory.FieldAccess(factory.Ident(var.name), factory.getName("getClass"));
+        return factory.createMethodInvocation(factory.List(), getClassFieldAccessor, factory.List());
+    }
+
+    private JCExpression resolvePrimitiveTypeTree(JCPrimitiveTypeTree tree) { //this might work for objects too... imports could cause issue though
+        String typeString = tree.toString();
+        return factory.FieldAccess(factory.Ident(typeString), factory.getName("class"));
+    }
 
 
 }

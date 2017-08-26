@@ -41,5 +41,4 @@ public class MethodTranslator extends TreeTranslator {
         JCMethodDecl newMethod = methodCreator.createMethod();
         return newMethod;
     }
-
 }
