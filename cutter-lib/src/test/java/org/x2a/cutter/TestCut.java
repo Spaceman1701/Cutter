@@ -7,6 +7,7 @@ import org.x2a.cutter.annotation.Cut;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.cut.PointCut;
+import org.x2a.cutter.pointcut.AbstractPointCut;
 
 import javax.annotation.processing.AbstractProcessor;
 import java.lang.annotation.Target;
@@ -14,7 +15,7 @@ import java.lang.reflect.Method;
 
 public class TestCut {
 
-    static class TestPC extends PointCut<String> {
+    static class TestPC extends AbstractPointCut<String> {
         public TestPC(JoinPoint joinPoint, Parameter[] parameters) {
             super(joinPoint, parameters);
         }
