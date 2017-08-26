@@ -185,6 +185,10 @@ public class TreeFactory { //TODO: This class should handle more things and it s
         return maker.TypeCast(type, expression);
     }
 
+    public JCReturn Return(JCExpression expression) {
+        return maker.Return(expression);
+    }
+
     public JCModifiers Modifiers(long flags) {
         return maker.Modifiers(flags);
     }

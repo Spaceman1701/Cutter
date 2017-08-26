@@ -18,8 +18,6 @@ public class VoidBodyCreator extends WrapperBodyCreator {
 
         statements = statements.append(createPointCutVar());
 
-        JCMethodInvocation methodInvocation = createWrappedMethodInvocation();
-
         statements = statements.append(createConditionalStatement(createIfBlock(), createElseStatment()));
 
         return factory.Block(0, statements);
@@ -27,12 +25,12 @@ public class VoidBodyCreator extends WrapperBodyCreator {
 
     private JCBlock createIfBlock() {
         JCStatement wrappedMethodInvokeStmt = factory.Exec(createWrappedMethodInvocation());
-        JCStatement pointCutAfterInvokeStmt = factory.Exec(getPointCutMethodInvoke("after"));
+        JCStatement pointCutAfterInvokeStmt = factory.Exec(getPointCutMethodInvoke("after", factory.List()));
 
         return factory.Block(0, List.of(wrappedMethodInvokeStmt, pointCutAfterInvokeStmt));
     }
 
     private JCStatement createElseStatment() {
-        return factory.Exec(getPointCutMethodInvoke("onSkip"));
+        return factory.Exec(getPointCutMethodInvoke("onSkip", factory.List()));
     }
 }

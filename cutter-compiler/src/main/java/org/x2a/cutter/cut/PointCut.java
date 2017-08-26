@@ -31,7 +31,7 @@ public abstract class PointCut<RETURN_TYPE> {
      * @return The value to be returned by the method call. Use {@link Void} for void methods. The return of this method will
      * undergo a static cast to the return type of the method being wrapped.
      */
-    public abstract RETURN_TYPE after();
+    public abstract RETURN_TYPE after(RETURN_TYPE returnValue);
 
     /**
      * Called iff {@link PointCut#before()} returns <code>false</code>. Use this method to add a default return value

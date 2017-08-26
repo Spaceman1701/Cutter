@@ -68,7 +68,7 @@ class PointCutCreator {
         if (methodDecl.restype.type instanceof Type.JCVoidType) {
             return new VoidBodyCreator(factory, pointCutNewClassNode, methodDecl.name, methodDecl.params);
         } else {
-            return new ReturningBodyCreator(factory, pointCutNewClassNode, methodDecl.name, methodDecl.params);
+            return new ReturningBodyCreator(factory, pointCutNewClassNode, methodDecl.name, methodDecl.params, methodDecl.restype);
         }
     }
 

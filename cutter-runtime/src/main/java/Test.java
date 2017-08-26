@@ -8,9 +8,10 @@ public class Test {
 
 
     @Cut(ACut.class)
-    public void AMethod(int i) {
+    public Object AMethod(int i) {
         System.out.println(i);
         System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
+        return null;
     }
 
     private void anotherMethod() {

@@ -2,7 +2,7 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.cut.PointCut;
 
-public class ACut extends PointCut<Void> {
+public class ACut extends PointCut<Object> {
 
     public ACut(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
@@ -12,17 +12,17 @@ public class ACut extends PointCut<Void> {
     @Override
     public boolean before() {
         System.out.println("before was called at jp: " + joinPoint.toString());
-        return false;
+        return true;
     }
 
     @Override
-    public Void after() {
+    public Object after(Object returnValue) {
         System.out.println("After was called!");
         return null;
     }
 
     @Override
-    public Void onSkip() {
+    public Object onSkip() {
         System.out.println("On skip was called");
         return null;
     }

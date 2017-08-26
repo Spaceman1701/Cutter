@@ -58,8 +58,8 @@ public abstract class WrapperBodyCreator {
         return factory.FieldAccess(factory.Ident(POINT_CUT_VAR_NAME), factory.getName(name));
     }
 
-    protected JCMethodInvocation getPointCutMethodInvoke(String methodName) {
-        return factory.createMethodInvocation(factory.List(), getPointCutField(methodName), factory.List());
+    protected JCMethodInvocation getPointCutMethodInvoke(String methodName, List<JCExpression> params) {
+        return factory.createMethodInvocation(factory.List(), getPointCutField(methodName), params);
     }
 
     private JCExpression currentValueExpression(int index) {
