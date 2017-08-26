@@ -62,9 +62,9 @@ class PointCutCreator {
     private WrapperBodyCreator chooseBodyCreator() {
         JCNewClass pointCutNewClassNode = createPointCutNewClass(methodDecl.params);
         if (methodDecl.restype.type instanceof Type.JCVoidType) {
-            return new VoidBodyCreator(factory, pointCutNewClassNode, methodDecl.name);
+            return new VoidBodyCreator(factory, pointCutNewClassNode, methodDecl.name, methodDecl.params);
         } else {
-            return new ReturningBodyCreator(factory, pointCutNewClassNode, methodDecl.name);
+            return new ReturningBodyCreator(factory, pointCutNewClassNode, methodDecl.name, methodDecl.params);
         }
     }
 
@@ -74,7 +74,7 @@ class PointCutCreator {
     }
 
     private List<JCExpression> createPointCutArgs(List<JCVariableDecl> params) {
-        return List.of(createJoinPoint());
+        return List.of(createJoinPoint(), createParameterArray(params));
     }
 
     private JCMethodInvocation createParameterArray(List<JCVariableDecl> params) {
@@ -101,8 +101,7 @@ class PointCutCreator {
     private JCNewArray getParameterObjectArray(List<JCVariableDecl> params) {
         List<JCExpression> arrayValues = factory.List();
 
-        for (int i = 0; i < params.length() * 3; i++) {
-            JCVariableDecl var = params.get(i / 3);
+        for (JCVariableDecl var : params) {
             JCLiteral nameLiteral = factory.Literal(var.name.toString());
             JCExpression classExpression = getVarTypeExpression(var);
             JCIdent varIdentifier = factory.Ident(var.name);

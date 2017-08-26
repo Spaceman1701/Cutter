@@ -1,8 +1,6 @@
 package org.x2a.cutter.processor.javac;
 
-import com.sun.source.tree.BlockTree;
-import com.sun.source.tree.MethodTree;
-import com.sun.tools.javac.code.Symbol;
+import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
@@ -11,9 +9,6 @@ import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Basically a javadoc'd version of the TreeMaker
@@ -179,8 +174,16 @@ public class TreeFactory { //TODO: This class should handle more things and it s
         return maker.NewArray(type, dims, elements);
     }
 
-    public JCLiteral Literal(String s) {
-        return maker.Literal(s);
+    public JCLiteral Literal(Object o) {
+        return maker.Literal(o);
+    }
+
+    public JCArrayAccess ArrayAccess(JCExpression array, JCExpression index) {
+        return maker.Indexed(array, index);
+    }
+
+    public JCTypeCast TypeCast(JCTree type, JCExpression expression) {
+        return maker.TypeCast(type, expression);
     }
 
     public JCModifiers Modifiers(long flags) {

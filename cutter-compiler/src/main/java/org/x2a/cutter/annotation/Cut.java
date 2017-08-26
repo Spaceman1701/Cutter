@@ -24,7 +24,7 @@ public @interface Cut {
          */
         public static Parameter[] toParameters(Object[] values) {
             Parameter[] parameters = new Parameter[values.length / 3];
-            for (int i = 0; i < values.length; i++) {
+            for (int i = 0; i < values.length; i += 3) {
                 String name = (String) values[i];
                 Class<?> clazz = (Class<?>) values[i + 1];
                 Object val = values[i + 2];

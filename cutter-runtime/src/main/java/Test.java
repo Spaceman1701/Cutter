@@ -7,10 +7,10 @@ public class Test {
 
 
     @Cut(ACut.class)
-    public void AMethod() {
-        Object o = null;
-        System.out.println(o);
-        int i = 6;
+    public void AMethod(String i) {
+        Object[] array = new Object[]{"hello", "world", 2};
+        int two = (int) array[2];
+        System.out.println(two);
         System.out.println(i);
         System.out.println(Arrays.toString(Thread.currentThread().getStackTrace()));
     }
@@ -22,6 +22,6 @@ public class Test {
     public static void main(String[] args) {
         System.out.println("main");
         Test t = new Test();
-        t.AMethod();
+        t.AMethod("this was a passed variable");
     }
 }

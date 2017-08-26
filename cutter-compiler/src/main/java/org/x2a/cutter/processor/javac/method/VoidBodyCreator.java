@@ -8,8 +8,8 @@ import org.x2a.cutter.processor.javac.TreeFactory;
 
 public class VoidBodyCreator extends WrapperBodyCreator {
 
-    public VoidBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName) {
-        super(factory, pointCutClass, wrappedMethodName);
+    public VoidBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName, List<JCVariableDecl> params) {
+        super(factory, pointCutClass, wrappedMethodName, params);
     }
 
     @Override

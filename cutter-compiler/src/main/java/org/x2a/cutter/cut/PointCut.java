@@ -6,12 +6,18 @@ package org.x2a.cutter.cut;
 public abstract class PointCut<RETURN_TYPE> {
 
     protected final JoinPoint joinPoint;
+    protected final Parameter[] parameters;
     /**
      * Creates a PointCut instance
      * @param joinPoint the join point where this point cut was created
      */
-    public PointCut(final JoinPoint joinPoint) {
+    public PointCut(final JoinPoint joinPoint, Parameter[] parameters) {
         this.joinPoint = joinPoint;
+        this.parameters = parameters;
+    }
+
+    public final Object getParameterValue(int index) {
+        return parameters[index].getCurrentValue();
     }
 
     /**

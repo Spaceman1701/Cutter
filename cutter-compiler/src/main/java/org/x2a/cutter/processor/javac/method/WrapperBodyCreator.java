@@ -2,6 +2,8 @@ package org.x2a.cutter.processor.javac.method;
 
 
 import com.sun.tools.javac.code.Flags;
+import com.sun.tools.javac.code.Type;
+import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
@@ -14,11 +16,13 @@ public abstract class WrapperBodyCreator {
     protected final JCNewClass pointCutClass;
     protected final TreeFactory factory;
     protected final Name wrappedMethodName;
+    protected final List<JCVariableDecl> params;
 
-    public WrapperBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName) {
+    public WrapperBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName, List<JCVariableDecl> params) {
         this.pointCutClass = pointCutClass;
         this.factory = factory;
         this.wrappedMethodName = wrappedMethodName;
+        this.params = params;
     }
 
     public abstract JCBlock createMethodBody();
@@ -34,7 +38,25 @@ public abstract class WrapperBodyCreator {
     }
 
     protected JCMethodInvocation createWrappedMethodInvocation() {
-        return factory.createMethodInvocation(factory.List(), factory.Ident(wrappedMethodName), factory.List()); //TODO: args
+        return factory.createMethodInvocation(factory.List(), factory.Ident(wrappedMethodName), createMethodCallParams()); //TODO: args
     }
 
+    protected List<JCExpression> createMethodCallParams() {
+        List<JCExpression> result = factory.List();
+        for (int i = 0; i < params.length(); i++) {
+            JCTree type = params.get(i).vartype;
+            JCExpression getValueExp = currentValueExpression(i);
+
+            JCExpression actualValueExp = factory.TypeCast(type, getValueExp);
+
+            result = result.append(actualValueExp);
+        }
+
+        return result;
+    }
+
+    private JCExpression currentValueExpression(int index) {
+        JCFieldAccess getParamField = factory.FieldAccess(factory.Ident(POINT_CUT_VAR_NAME), factory.getName("getParameterValue"));
+        return factory.createMethodInvocation(factory.List(), getParamField, List.of(factory.Literal(index)));
+    }
 }
