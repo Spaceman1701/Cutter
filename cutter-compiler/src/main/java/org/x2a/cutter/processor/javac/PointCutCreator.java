@@ -1,13 +1,9 @@
 package org.x2a.cutter.processor.javac;
 
-import com.sun.tools.javac.code.Flags;
 import com.sun.tools.javac.code.Type;
-import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
-import org.x2a.cutter.processor.javac.TreeFactory;
-import org.x2a.cutter.processor.javac.Utils;
 import org.x2a.cutter.processor.javac.method.ReturningBodyCreator;
 import org.x2a.cutter.processor.javac.method.VoidBodyCreator;
 import org.x2a.cutter.processor.javac.method.WrapperBodyCreator;

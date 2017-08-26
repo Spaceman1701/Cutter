@@ -2,12 +2,9 @@ package org.x2a.cutter.processor.javac;
 
 import com.sun.source.tree.Tree;
 import com.sun.tools.javac.code.Flags;
-import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.tree.JCTree;
-import com.sun.tools.javac.tree.JCTree.*;
-import com.sun.tools.javac.tree.TreeMaker;
+import com.sun.tools.javac.tree.JCTree.JCMethodDecl;
 import com.sun.tools.javac.tree.TreeTranslator;
-import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.annotation.Cut;
 

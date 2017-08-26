@@ -1,13 +1,9 @@
 package org.x2a.cutter.processor.javac;
 
-import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCAnnotation;
 import com.sun.tools.javac.util.List;
-import com.sun.tools.javac.util.Name;
-import org.x2a.cutter.annotation.Cut;
-import org.x2a.cutter.cut.PointCut;
 
 import java.lang.annotation.Annotation;
 

@@ -8,13 +8,11 @@ import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import org.x2a.cutter.processor.javac.MethodTranslator;
 import org.x2a.cutter.processor.javac.TreeFactory;
-import sun.reflect.generics.tree.Tree;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic;
 import java.util.Set;
 
 @SupportedAnnotationTypes("org.x2a.cutter.annotation.Cut")
