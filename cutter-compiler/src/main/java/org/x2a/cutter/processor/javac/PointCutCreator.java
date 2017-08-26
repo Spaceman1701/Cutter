@@ -128,8 +128,7 @@ class PointCutCreator {
     }
 
     private JCExpression resolvePrimitiveTypeTree(JCPrimitiveTypeTree tree) { //this might work for objects too... imports could cause issue though
-        String typeString = tree.toString();
-        return factory.FieldAccess(factory.Ident(typeString), factory.getName("class"));
+        return factory.FieldAccess(tree, factory.getName("class"));
     }
 
 
