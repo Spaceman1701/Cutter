@@ -1,5 +1,6 @@
 package org.x2a.cutter.processor.javac;
 
+import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
@@ -42,7 +43,7 @@ public class TreeFactory { //TODO: This class should handle more things and it s
     }
 
     public JCLiteral Null() {
-        return maker.Literal("null");
+        return maker.Literal(TypeTag.BOT, null);
     }
 
     /**

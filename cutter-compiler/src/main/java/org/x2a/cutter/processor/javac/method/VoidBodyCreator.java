@@ -5,6 +5,7 @@ import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.processor.javac.TreeFactory;
+import sun.tools.jstat.Literal;
 
 public class VoidBodyCreator extends WrapperBodyCreator {
 
@@ -25,7 +26,7 @@ public class VoidBodyCreator extends WrapperBodyCreator {
 
     private JCBlock createIfBlock() {
         JCStatement wrappedMethodInvokeStmt = factory.Exec(createWrappedMethodInvocation());
-        JCStatement pointCutAfterInvokeStmt = factory.Exec(getPointCutMethodInvoke("after", factory.List()));
+        JCStatement pointCutAfterInvokeStmt = factory.Exec(getPointCutMethodInvoke("after", List.of(factory.Null())));
 
         return factory.Block(0, List.of(wrappedMethodInvokeStmt, pointCutAfterInvokeStmt));
     }
