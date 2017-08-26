@@ -39,6 +39,7 @@ public class MethodTranslator extends TreeTranslator {
         methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
         PointCutCreator methodCreator = new PointCutCreator(factory, methodDecl, oldName, Utils.getAnnotation(methodDecl, Cut.class));
         JCMethodDecl newMethod = methodCreator.createMethod();
+        methodDecl.mods.flags = Flags.PRIVATE | ((methodDecl.mods.flags & ~Flags.PUBLIC) & ~Flags.PROTECTED);
         return newMethod;
     }
 }

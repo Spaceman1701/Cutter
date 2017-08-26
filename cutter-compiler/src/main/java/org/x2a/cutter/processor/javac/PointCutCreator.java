@@ -55,8 +55,16 @@ class PointCutCreator {
      */
     JCMethodDecl createMethod() {
         final JCBlock body = chooseBodyCreator().createMethodBody();
-        return factory.createMethod(methodDecl.mods, oldName, methodDecl.restype, methodDecl.typarams,
+        return factory.createMethod(copyMods(), oldName, methodDecl.restype, methodDecl.typarams,
                 methodDecl.params, methodDecl.thrown, body, methodDecl.defaultValue);
+    }
+
+    private JCModifiers copyMods() { //shallow copy probably good enough here
+        JCModifiers original = methodDecl.mods;
+
+        JCModifiers newMods = factory.Modifiers(original.flags);
+        newMods.annotations = original.annotations;
+        return newMods;
     }
 
     private WrapperBodyCreator chooseBodyCreator() {
