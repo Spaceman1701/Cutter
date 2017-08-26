@@ -7,9 +7,9 @@ minimal "magic" code.
 # Features
 ## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax is required.
-#Performance
+## Performance
 Since cutter creates Pointcuts complete at compile time and does not depend on reflection, it has a minimal performance impact.
-##Security
+## Security
 Cutter's Pointcuts are also memory safe, which means that the ```before``` method of the point cut executes before the intercepted method's
 stack frame is even allocated. 
 
