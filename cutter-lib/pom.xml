@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cutter-runtime</artifactId>
+    <artifactId>cutter-lib</artifactId>
 
     <build>
         <plugins>
