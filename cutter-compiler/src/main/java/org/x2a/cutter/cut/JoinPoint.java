@@ -2,6 +2,9 @@ package org.x2a.cutter.cut;
 
 import org.x2a.cutter.Constants;
 
+/**
+ * Contains information about the Joinpoint where a Pointcut was invoked. This includes the Class and method names.
+ */
 public class JoinPoint {
 
     private final Class<?> clazz;
@@ -14,10 +17,16 @@ public class JoinPoint {
         this.realMethodName = Constants.METHOD_WRAPPED_PREFIX + methodName;
     }
 
+    /**
+     * Get the class this join point was created in.
+     */
     public Class<?> getClazz() {
         return clazz;
     }
 
+    /**
+     * Get the name of the method that was intercepted at this Joinpoint.
+     */
     public String getMethodName() {
         return methodName;
     }
@@ -27,6 +36,9 @@ public class JoinPoint {
         return clazz + "::" + methodName;
     }
 
+    /**
+     * Get the name of the intercepting method. (This may be useful for reflection).
+     */
     public String getRealMethodName() {
         return realMethodName;
     }

@@ -1,7 +1,13 @@
 package org.x2a.cutter.cut;
 
 /**
- * Marker interface... or not
+ * Base interface for defining PointCut objects (see {@link org.x2a.cutter.annotation.Cut}).
+ * <p>
+ * The return type should be specified by the implementation. Use {@link Void} for void return types
+ * </p>
+ * <p>
+ * Input parameters and return values follow Java's type casting and boxing rules
+ * </p>
  */
 public abstract class PointCut<RETURN_TYPE> {
 
@@ -16,6 +22,11 @@ public abstract class PointCut<RETURN_TYPE> {
         this.parameters = parameters;
     }
 
+    /**
+     * Gets the current value of the parameter at the given index. Used internally by Cutter. see {@link Parameter#getCurrentValue()}
+     * @param index The parameter's index
+     * @return the current value of the parameter
+     */
     public final Object getParameterValue(int index) {
         return parameters[index].getCurrentValue();
     }
