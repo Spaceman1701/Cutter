@@ -16,9 +16,11 @@ class Utils {
     static JCAnnotation getAnnotation(JCTree.JCMethodDecl methodDecl, Class<? extends Annotation> annotation) {
         List<JCAnnotation> annotationList = methodDecl.getModifiers().annotations;
         for (JCAnnotation jcAnnotation : annotationList) {
-            Type type = jcAnnotation.attribute.type;
-            if (type.toString().equals(annotation.getName())) {
-                return jcAnnotation;
+            if (jcAnnotation.attribute != null) {
+                Type type = jcAnnotation.attribute.type;
+                if (type.toString().equals(annotation.getName())) {
+                    return jcAnnotation;
+                }
             }
         }
         return null;

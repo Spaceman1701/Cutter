@@ -4,6 +4,8 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.cut.PointCut;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,23 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
             }
         }
         return parameters;
+    }
+
+    protected Class<?>[] getParameterTypes() {
+        Class<?>[] types = new Class[parameterCount()];
+        for (int i = 0; i < parameterCount(); i++) {
+            types[i] = getParameter(i).getClazz();
+        }
+        return types;
+    }
+
+    protected Annotation getMethodAnnotation(Class<? extends Annotation> annotation) {
+        try {
+            Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getMethodName(), getParameterTypes());
+            return method.getAnnotation(annotation);
+        } catch (NoSuchMethodException e) { //this should not ever happen
+            throw new RuntimeException(e); //TODO: this really shouldn't happen
+        }
     }
 
 }

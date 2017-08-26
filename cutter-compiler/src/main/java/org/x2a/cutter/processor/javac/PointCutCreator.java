@@ -119,19 +119,10 @@ class PointCutCreator {
 
     private JCExpression getVarTypeExpression(JCVariableDecl var) {
         JCExpression typeExpression = var.vartype;
-        if (typeExpression instanceof JCPrimitiveTypeTree) {
-            return resolvePrimitiveTypeTree((JCPrimitiveTypeTree) typeExpression);
-        } else {
-            return createGetClassExpression(var);
-        }
+        return resolveStaticArgType(typeExpression);
     }
 
-    private JCExpression createGetClassExpression(JCVariableDecl var) {
-        JCFieldAccess getClassFieldAccessor = factory.FieldAccess(factory.Ident(var.name), factory.getName("getClass"));
-        return factory.createMethodInvocation(factory.List(), getClassFieldAccessor, factory.List());
-    }
-
-    private JCExpression resolvePrimitiveTypeTree(JCPrimitiveTypeTree tree) { //this might work for objects too... imports could cause issue though
+    private JCExpression resolveStaticArgType(JCExpression tree) { //this might work for objects too... imports could cause issue though
         return factory.FieldAccess(tree, factory.getName("class"));
     }
 

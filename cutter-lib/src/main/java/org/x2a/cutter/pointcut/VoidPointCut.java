@@ -4,7 +4,7 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.cut.PointCut;
 
-public abstract class VoidPointCut extends PointCut<Void> {
+public abstract class VoidPointCut extends AbstractPointCut<Void> {
     public VoidPointCut(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
     }
