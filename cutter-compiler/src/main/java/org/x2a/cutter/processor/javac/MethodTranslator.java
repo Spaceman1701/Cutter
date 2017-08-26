@@ -6,6 +6,7 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCMethodDecl;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.Name;
+import org.x2a.cutter.Constants;
 import org.x2a.cutter.annotation.Cut;
 
 public class MethodTranslator extends TreeTranslator {
@@ -33,7 +34,7 @@ public class MethodTranslator extends TreeTranslator {
 
     private JCMethodDecl renameAndCreateWrapper(JCMethodDecl methodDecl) {
         Name oldName = methodDecl.name;
-        methodDecl.name = factory.getName("__wrapped__" + oldName.toString());
+        methodDecl.name = factory.getName(Constants.METHOD_WRAPPED_PREFIX + oldName.toString());
         PointCutCreator methodCreator = new PointCutCreator(factory, methodDecl, oldName, Utils.getAnnotation(methodDecl, Cut.class));
         JCMethodDecl newMethod = methodCreator.createMethod();
         methodDecl.mods.flags = Flags.PRIVATE | ((methodDecl.mods.flags & ~Flags.PUBLIC) & ~Flags.PROTECTED);

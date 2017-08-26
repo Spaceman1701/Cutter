@@ -6,11 +6,11 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
+import org.x2a.cutter.Constants;
 import org.x2a.cutter.processor.javac.TreeFactory;
 
 public abstract class WrapperBodyCreator {
-    public static final String GENERATED_VAR_PREFIX = "___generated_var__";
-    protected static final String POINT_CUT_VAR_NAME = GENERATED_VAR_PREFIX + "pointCut";
+    protected static final String POINT_CUT_VAR_NAME = Constants.GENERATED_VAR_PREFIX + "pointCut";
 
     protected final JCNewClass pointCutClass;
     protected final TreeFactory factory;
@@ -52,6 +52,14 @@ public abstract class WrapperBodyCreator {
         }
 
         return result;
+    }
+
+    protected JCFieldAccess getPointCutField(String name) {
+        return factory.FieldAccess(factory.Ident(POINT_CUT_VAR_NAME), factory.getName(name));
+    }
+
+    protected JCMethodInvocation getPointCutMethodInvoke(String methodName) {
+        return factory.createMethodInvocation(factory.List(), getPointCutField(methodName), factory.List());
     }
 
     private JCExpression currentValueExpression(int index) {
