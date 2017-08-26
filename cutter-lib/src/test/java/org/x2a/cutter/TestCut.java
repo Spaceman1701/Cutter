@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 
 public class TestCut {
 
-    static class TestPC extends PointCut<Boolean> {
+    static class TestPC extends PointCut<String> {
         public TestPC(JoinPoint joinPoint, Parameter[] parameters) {
             super(joinPoint, parameters);
         }
@@ -25,31 +25,31 @@ public class TestCut {
         }
 
         @Override
-        public Boolean after(Boolean aBoolean) {
-            return true;
+        public String after(String aBoolean) {
+            return "after";
         }
 
         @Override
-        public Boolean onSkip() {
-            return true;
+        public String onSkip() {
+            return "skipped";
         }
     }
 
 
     @Cut(TestPC.class)
-    private boolean methodToCut(String s) {
-        return false;
+    private String methodToCut(String s) {
+        return "the real return";
     }
 
 
     @Test
     public void testCut() {
-        Assert.assertTrue("the cut should've returned true", methodToCut("invoke"));
+        Assert.assertEquals("the cut should've returned true", "after", methodToCut("invoke"));
     }
 
     @Test
     public void testOnSkip() {
-        Assert.assertTrue("onSkip should've been called and should've returned true", methodToCut("no"));
+        Assert.assertEquals("onSkip should've been called and should've returned true", "skipped", methodToCut("no"));
     }
 
     @Test
