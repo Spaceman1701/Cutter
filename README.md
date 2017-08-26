@@ -4,8 +4,8 @@ the primary feature of Cutter is the ability to add [Pointcuts](https://en.wikip
 like AspectJ, Cutter does't require a special compiler or heavy runtime dependencies. Cutter is written in pure java with
 minimal "magic" code. 
 
-#Features
-##Simplicity
+# Features
+## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax is required.
 #Performance
 Since cutter creates Pointcuts complete at compile time and does not depend on reflection, it has a minimal performance impact.
@@ -17,7 +17,7 @@ Another advantage for Cutter's security is it's simplicity: Cutter doesn't depen
 logic. This reduces the potential security risks substantially. Furthermore, since cutter isn't dependant on reflection, the
 Java security manager can be activated without interfering with Pointcuts.  
 
-#Example
+# Example
 
 To use cutter, you first have to create an concrete implementation of the ```PointCut``` abstract class. Then you have to
 annotate your methods with ```@Cut```
