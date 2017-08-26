@@ -19,15 +19,7 @@ public class Test {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println("main");
-        Test t = new Test();
-        System.out.println(t.AMethod(43));
-
-        Method wrapped = Test.class.getDeclaredMethod("__wrapped__AMethod", int.class);
-        System.out.println(wrapped);
-
-        Method upwrapped = Test.class.getDeclaredMethod("AMethod", int.class);
-        System.out.println(upwrapped);
-
+        Integer i = 0;
+        System.out.println((int) i);
     }
 }

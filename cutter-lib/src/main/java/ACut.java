@@ -17,7 +17,7 @@ public class ACut extends PointCut<Object> {
 
     @Override
     public Object after(Object returnValue) {
-        if ((int)parameters[0].getCurrentValue() == 42) {
+        if ((int)getParameter(0).getCurrentValue() == 42) {
             return "you entered the special number";
         }
         return returnValue;

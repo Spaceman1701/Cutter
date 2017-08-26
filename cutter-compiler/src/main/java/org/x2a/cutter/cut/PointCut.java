@@ -12,14 +12,24 @@ package org.x2a.cutter.cut;
 public abstract class PointCut<RETURN_TYPE> {
 
     protected final JoinPoint joinPoint;
-    protected final Parameter[] parameters;
+    private final Parameter[] parameters;
     /**
-     * Creates a PointCut instance
+     * @implNote ALL IMPLEMENTATIONS MUST HAVE A CONSTRUCTOR WITH THIS SIGNATURE
      * @param joinPoint the join point where this point cut was created
+     * @param parameters the parameters passed to the method
      */
     public PointCut(final JoinPoint joinPoint, Parameter[] parameters) {
         this.joinPoint = joinPoint;
         this.parameters = parameters;
+    }
+
+
+    protected final Parameter getParameter(int index) {
+        return parameters[index];
+    }
+
+    protected final int parameterCount() {
+        return parameters.length;
     }
 
     /**

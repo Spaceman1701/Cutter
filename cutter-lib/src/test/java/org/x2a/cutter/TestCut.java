@@ -1,5 +1,6 @@
 package org.x2a.cutter;
 
+import com.sun.source.tree.MethodTree;
 import org.junit.Assert;
 import org.junit.Test;
 import org.x2a.cutter.annotation.Cut;
@@ -7,7 +8,9 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.cut.PointCut;
 
+import javax.annotation.processing.AbstractProcessor;
 import java.lang.annotation.Target;
+import java.lang.reflect.Method;
 
 public class TestCut {
 
@@ -18,7 +21,7 @@ public class TestCut {
 
         @Override
         public boolean before() {
-            return parameters[0].equals("invoke");
+            return getParameterValue(0).equals("invoke");
         }
 
         @Override
@@ -47,5 +50,12 @@ public class TestCut {
     @Test
     public void testOnSkip() {
         Assert.assertTrue("onSkip should've been called and should've returned true", methodToCut("no"));
+    }
+
+    @Test
+    public void testWrappedMethodExists() throws Exception {
+        Method method = getClass().getDeclaredMethod("__wrapped__methodToCut", String.class);
+        Assert.assertNotNull(method);
+        Assert.assertFalse(method.isAccessible());
     }
 }
