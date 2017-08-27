@@ -7,6 +7,8 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.pointcut.AbstractPointCut;
 
+import java.lang.annotation.Annotation;
+
 public class TestAbstractPointCut {
 
     static class PC extends AbstractPointCut<String> {
@@ -19,12 +21,12 @@ public class TestAbstractPointCut {
         public boolean before() {
             Class<?>[] classes = getParameterTypes();
             Assert.assertArrayEquals(new Class<?>[]{String.class, int.class, float.class}, classes);
-            return false;
+            return (int)getParameterValue(1) == 0;
         }
 
         @Override
         public String after(String returnValue) {
-            return null;
+            return ((TestAnnotation)getMethodAnnotation(TestAnnotation.class)).value();
         }
 
         @Override
@@ -33,6 +35,11 @@ public class TestAbstractPointCut {
         }
     }
 
+    @interface TestAnnotation {
+        String value();
+    }
+
+    @TestAnnotation("this is a value")
     @Cut(PC.class)
     public String method(String s, int i, float f) {
         return "return";
@@ -41,6 +48,11 @@ public class TestAbstractPointCut {
 
     @Test
     public void testGetParameterTypes() {
-        Assert.assertEquals("method skipped", method("", 0, 0.0f));
+        Assert.assertEquals("method skipped", method("", 6, 0.0f));
+    }
+
+    @Test
+    public void testGetOtherAnnotation() {
+        Assert.assertEquals("this is a value", method("", 0, 0.0f));
     }
 }
