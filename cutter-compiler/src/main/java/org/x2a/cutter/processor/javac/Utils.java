@@ -1,5 +1,6 @@
 package org.x2a.cutter.processor.javac;
 
+import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCAnnotation;
@@ -26,9 +27,13 @@ class Utils {
         return null;
     }
 
-    static JCTree.JCIdent getPointCut(JCAnnotation annotation) {
+    static JCTree.JCExpression getPointCut(JCAnnotation annotation) {
         JCTree.JCAssign assign = (JCTree.JCAssign) annotation.getArguments().get(0);
-        JCTree.JCFieldAccess clazzField = (JCTree.JCFieldAccess) assign.rhs;
-        return (JCTree.JCIdent) clazzField.selected;
+        JCTree.JCExpression clazzExp = resolveClassExpression((JCTree.JCFieldAccess) assign.rhs);
+        return clazzExp;
+    }
+
+    private static JCTree.JCExpression resolveClassExpression(JCTree.JCFieldAccess clazzField) {
+        return clazzField.selected;
     }
 }

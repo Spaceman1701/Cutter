@@ -17,20 +17,14 @@ class PointCutCreator {
     private final JCMethodDecl methodDecl;
     private final Name oldName;
     private final JCAnnotation annotation;
+    private final Name clazzName;
 
-    private List<JCStatement> statements;
-
-    PointCutCreator(TreeFactory factory, JCMethodDecl methodDecl, Name oldName, JCAnnotation annotation) {
+    PointCutCreator(TreeFactory factory, Name clazzName, JCMethodDecl methodDecl, Name oldName, JCAnnotation annotation) {
         this.factory = factory;
         this.methodDecl = methodDecl;
         this.oldName = oldName;
         this.annotation = annotation;
-
-        statements = factory.List();
-    }
-
-    private void appendStatement(JCStatement statement) {
-        this.statements = statements.append(statement);
+        this.clazzName = clazzName;
     }
 
     /*
@@ -73,7 +67,7 @@ class PointCutCreator {
     }
 
     private JCNewClass createPointCutNewClass(List<JCVariableDecl> params) {
-        JCIdent clazz = Utils.getPointCut(annotation);
+        JCExpression clazz = Utils.getPointCut(annotation);
         return factory.NewClass(null, List.nil(), clazz, createPointCutArgs(params), null);
     }
 
@@ -91,10 +85,11 @@ class PointCutCreator {
     private JCMethodInvocation createJoinPoint() {
         JCLiteral methodName = factory.Literal(oldName.toString());
         JCMethodInvocation clazzMethod = factory.createMethodInvocation(factory.List(), factory.Ident("getClass"), factory.List());
+        JCFieldAccess clazzField = factory.FieldAccess(factory.Ident(clazzName), factory.getName("class"));
 
         JCFieldAccess factoryMethodField = getCutUtilsField("createJoinPoint");
 
-        return factory.createMethodInvocation(List.nil(), factoryMethodField, List.of(clazzMethod, methodName));
+        return factory.createMethodInvocation(List.nil(), factoryMethodField, List.of(clazzField, methodName));
     }
 
     private JCFieldAccess getCutUtilsField(String name) {

@@ -25,17 +25,17 @@ public class MethodTranslator extends TreeTranslator {
             if (tree.getKind() == Tree.Kind.METHOD) {
                JCTree.JCMethodDecl methodDecl = (JCTree.JCMethodDecl) tree;
                if (Utils.isAnnotatedWith(methodDecl, Cut.class)) {
-                   classDec.defs = classDec.defs.append(renameAndCreateWrapper(methodDecl));
+                   classDec.defs = classDec.defs.append(renameAndCreateWrapper(classDec.name, methodDecl));
                }
             }
         }
         result = classDec;
     }
 
-    private JCMethodDecl renameAndCreateWrapper(JCMethodDecl methodDecl) {
+    private JCMethodDecl renameAndCreateWrapper(Name clazzName, JCMethodDecl methodDecl) {
         Name oldName = methodDecl.name;
         methodDecl.name = factory.getName(Constants.METHOD_WRAPPED_PREFIX + oldName.toString());
-        PointCutCreator methodCreator = new PointCutCreator(factory, methodDecl, oldName, Utils.getAnnotation(methodDecl, Cut.class));
+        PointCutCreator methodCreator = new PointCutCreator(factory, clazzName, methodDecl, oldName, Utils.getAnnotation(methodDecl, Cut.class));
         JCMethodDecl newMethod = methodCreator.createMethod();
         methodDecl.mods.flags = Flags.PRIVATE | ((methodDecl.mods.flags & ~Flags.PUBLIC) & ~Flags.PROTECTED);
         return newMethod;

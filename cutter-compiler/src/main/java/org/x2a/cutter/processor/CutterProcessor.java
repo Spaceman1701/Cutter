@@ -50,6 +50,7 @@ public class CutterProcessor extends AbstractProcessor {
             }
         } catch (RuntimeException e) {
             javacEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Cutter compile-time exception: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return false;
