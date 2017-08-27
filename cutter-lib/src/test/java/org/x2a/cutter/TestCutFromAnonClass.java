@@ -10,7 +10,7 @@ import org.x2a.cutter.pointcut.AbstractPointCut;
 
 import java.lang.reflect.Method;
 
-@Ignore
+@Ignore //TODO: Currently no good solution to this... Anon classes are currently unsupported
 public class TestCutFromAnonClass {
     static class TestPC extends AbstractPointCut<String> {
         public TestPC(JoinPoint joinPoint, Parameter[] parameters) {
