@@ -15,7 +15,11 @@ stack frame is even allocated.
 
 Another advantage for Cutter's security is it's simplicity: Cutter doesn't depend on any complex runtime (or even compile time)
 logic. This reduces the potential security risks substantially. Furthermore, since cutter isn't dependant on reflection, the
-Java security manager can be activated without interfering with Pointcuts.  
+Java security manager can be activated without interfering with Pointcuts. 
+
+## Interoperability
+Since cutter uses facade methods to do method invocation interception, Pointcuts have no special runtime requirements.
+This means that code that uses Cutter is standard java code that is fully compatible with any other Java library.
 
 # Example
 
@@ -24,7 +28,7 @@ annotate your methods with ```@Cut```
 
 A Pointcut is a plain old java object:
 ````java
-class MyPointCut extends PointCut<Object> {
+class MyPointCut extends AbstractPointCut<Object> {
     
     public MyPointCut(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
@@ -35,7 +39,7 @@ class MyPointCut extends PointCut<Object> {
     */
     @Override
     public boolean before() {
-        return parameters[0].getCurrentValue().equals("admin");
+        return getParamerValue(0).equals("admin");
     }
     
     /**
