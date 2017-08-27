@@ -5,6 +5,7 @@ import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.JCTree.JCAnnotation;
 import com.sun.tools.javac.util.List;
+import org.x2a.cutter.processor.CutterCompileException;
 
 import java.lang.annotation.Annotation;
 
@@ -22,6 +23,8 @@ class Utils {
                 if (type.toString().equals(annotation.getName())) {
                     return jcAnnotation;
                 }
+            } else if (jcAnnotation.annotationType.toString().equals(annotation.getSimpleName())) {
+                throw new CutterCompileException("Invalid Cut annotation location! (or another annotation has the simple name 'Cut', which is not currently supported");
             }
         }
         return null;
