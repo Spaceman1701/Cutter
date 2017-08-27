@@ -4,6 +4,7 @@ import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree.*;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
+import org.x2a.cutter.processor.CutterCompileException;
 import org.x2a.cutter.processor.javac.method.ReturningBodyCreator;
 import org.x2a.cutter.processor.javac.method.VoidBodyCreator;
 import org.x2a.cutter.processor.javac.method.WrapperBodyCreator;
@@ -67,8 +68,12 @@ class PointCutCreator {
     }
 
     private JCNewClass createPointCutNewClass(List<JCVariableDecl> params) {
-        JCExpression clazz = Utils.getPointCut(annotation);
-        return factory.NewClass(null, List.nil(), clazz, createPointCutArgs(params), null);
+        try {
+            JCExpression clazz = Utils.getPointCut(annotation);
+            return factory.NewClass(null, List.nil(), clazz, createPointCutArgs(params), null);
+        } catch (RuntimeException re) {
+            throw new CutterCompileException("Error resolving Pointcut at " + clazzName + "::" + methodDecl.name, re);
+        }
     }
 
     private List<JCExpression> createPointCutArgs(List<JCVariableDecl> params) {
@@ -84,7 +89,6 @@ class PointCutCreator {
 
     private JCMethodInvocation createJoinPoint() {
         JCLiteral methodName = factory.Literal(oldName.toString());
-        JCMethodInvocation clazzMethod = factory.createMethodInvocation(factory.List(), factory.Ident("getClass"), factory.List());
         JCFieldAccess clazzField = factory.FieldAccess(factory.Ident(clazzName), factory.getName("class"));
 
         JCFieldAccess factoryMethodField = getCutUtilsField("createJoinPoint");
