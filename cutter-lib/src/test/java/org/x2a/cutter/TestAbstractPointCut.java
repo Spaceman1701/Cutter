@@ -8,6 +8,8 @@ import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.pointcut.AbstractPointCut;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class TestAbstractPointCut {
 
@@ -35,6 +37,7 @@ public class TestAbstractPointCut {
         }
     }
 
+    @Retention(RetentionPolicy.RUNTIME)
     @interface TestAnnotation {
         String value();
     }

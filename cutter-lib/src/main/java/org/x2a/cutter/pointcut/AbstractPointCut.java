@@ -55,7 +55,7 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
 
     protected Annotation getMethodAnnotation(Class<? extends Annotation> annotation) {
         try {
-            Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getRealMethodName(), getParameterTypes());
+            Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getMethodName(), getParameterTypes());
             return method.getDeclaredAnnotation(annotation);
         } catch (NoSuchMethodException e) { //this should not ever happen
             throw new RuntimeException(e); //TODO: this really shouldn't happen
