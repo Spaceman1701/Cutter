@@ -13,6 +13,7 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 import java.util.Set;
 
 @SupportedAnnotationTypes("org.x2a.cutter.annotation.Cut")
@@ -39,13 +40,18 @@ public class CutterProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        if (!roundEnv.processingOver()) {
-            Set<? extends Element> elements = roundEnv.getRootElements();
-            for (Element e : elements) {
-                JCTree tree = (JCTree) trees.getTree(e);
-                tree.accept(treeTranslator);
+        try {
+            if (!roundEnv.processingOver()) {
+                Set<? extends Element> elements = roundEnv.getRootElements();
+                for (Element e : elements) {
+                    JCTree tree = (JCTree) trees.getTree(e);
+                    tree.accept(treeTranslator);
+                }
             }
+        } catch (RuntimeException e) {
+            javacEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "Cutter compile-time exception: " + e.getMessage());
         }
+
         return false;
     }
 }
