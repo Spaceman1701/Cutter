@@ -4,7 +4,7 @@ public class Main {
     /*
     This example shows how Cutter can be used to implement transparent caching without any complex dependencies
 
-    While the example here is simple, since all of the business logic is pure java, more complex solutions are easily integrated with Cutter
+    While the example here is simple, all the business logic is pure java which allows for arbitrarily complex solutions
 
     Expected Output:
     ----------------
