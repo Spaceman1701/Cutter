@@ -15,6 +15,7 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import java.util.Set;
@@ -67,6 +68,9 @@ public class CutterProcessor extends AbstractProcessor {
                 Symbol parent = methodSymbol.owner;
                 if (parent.getKind() != ElementKind.CLASS) {
                     throw new CutterCompileException("Cut at " + parent.getSimpleName() + "::" + e.getSimpleName() + " is invalid. Cuts must be placed on Classes");
+                }
+                if (methodSymbol.getModifiers().contains(Modifier.ABSTRACT)) {
+                    throw new CutterCompileException("Cut at " + parent.getSimpleName() + "::" + e.getSimpleName() + " is invalid. Cuts cannot be placed on abstract methods");
                 }
                 //TODO: currently impossible to find anonymous classes
             } else {
