@@ -13,7 +13,7 @@ public abstract class WrapperBodyCreator {
     protected static final String POINT_CUT_VAR_NAME = Constants.GENERATED_VAR_PREFIX + "pointCut";
 
     private final JCNewClass pointCutClass;
-    private final TreeFactory factory;
+    protected final TreeFactory factory;
     private final Name wrappedMethodName;
     private final List<JCVariableDecl> params;
 
