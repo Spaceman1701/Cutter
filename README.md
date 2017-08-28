@@ -72,3 +72,9 @@ public class foobar {
     }
 }
 ```
+# Limitations/Know Bugs
+* Cuts in anonymous classes are not supported
+    * Currently putting a Cut in an anonymous class does not raise a compiler error - it simply does nothing
+    * This is due to a limitation in the java compiler and may not be feasible to fix
+* Cutter is JDK dependent. While it appears to work on all Oracle JDKs (including OpenJDK), there is no guarantee
+that it will work on any given JDK. Cutter uses a "hack" similar to [project lombok](https://projectlombok.org/) to manipulate the AST at compile-time.
