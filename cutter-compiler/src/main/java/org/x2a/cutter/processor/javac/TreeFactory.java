@@ -11,8 +11,6 @@ import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 
-import javax.annotation.processing.Messager;
-
 /**
  * Basically a javadoc'd version of the TreeMaker -- also exposes some environment methods
  */

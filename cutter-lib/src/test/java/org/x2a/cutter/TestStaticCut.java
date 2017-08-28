@@ -3,9 +3,6 @@ package org.x2a.cutter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.x2a.cutter.annotation.Cut;
-import org.x2a.cutter.cut.JoinPoint;
-import org.x2a.cutter.cut.Parameter;
-import org.x2a.cutter.pointcut.AbstractPointCut;
 
 import java.lang.reflect.Method;
 
