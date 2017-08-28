@@ -78,3 +78,9 @@ public class foobar {
     * This is due to a limitation in the java compiler and may not be feasible to fix
 * Cutter is JDK dependent. While it appears to work on all Oracle JDKs (including OpenJDK), there is no guarantee
 that it will work on any given JDK. Cutter uses a "hack" similar to [project lombok](https://projectlombok.org/) to manipulate the AST at compile-time.
+* Recursive methods will trigger the Pointcut everytime - this behavior is probably acceptable in most cases, but may be configurable in the future.
+    * A possible workaround is to use reflection
+* Inhertence (specifically 'super') calls can lead to confusing behavior
+    * Java does not support method annotation inheritence, so Cuts should be placed on concrete classes when possible
+    * When making a call to 'super,' Cuts placed on the supermethod will be tirggered.
+    * Furthermore, abstract method's cannot be marked with Cut because it would cause invlaid code to be generated. This may be fixed in a future version
