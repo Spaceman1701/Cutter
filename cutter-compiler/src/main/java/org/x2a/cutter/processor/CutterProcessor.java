@@ -34,9 +34,6 @@ public class CutterProcessor extends AbstractProcessor {
         this.processingEnv = env;
         this.javacEnv = (JavacProcessingEnvironment) env;
         this.trees = Trees.instance(javacEnv);
-        TreeMaker treeMaker = TreeMaker.instance(javacEnv.getContext());
-        JavacElements elements = JavacElements.instance(javacEnv.getContext());
-
         TreeFactory treeFactory = new TreeFactory(javacEnv);
 
         treeTranslator = new MethodTranslator(treeFactory);
