@@ -6,7 +6,7 @@ minimal "magic" code.
 
 # Features
 ## Simplicity
-Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax is required.
+Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax or config files are required. 
 ## Performance
 Since cutter creates Pointcuts completely at compile time and does not depend on reflection, it has a minimal performance impact.
 ## Security
