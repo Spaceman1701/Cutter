@@ -4,8 +4,8 @@ the primary feature of Cutter is the ability to add [Pointcuts](https://en.wikip
 like AspectJ, Cutter does't require a special compiler or heavy runtime dependencies. Cutter is written in pure java with
 minimal "magic" code. 
 
-# Features
 Cutter is available for Java 8.
+# Features
 ## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax or config files are required. 
 ## Performance
