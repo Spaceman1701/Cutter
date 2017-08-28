@@ -1,5 +1,6 @@
 package org.x2a.cutter.processor.javac;
 
+import com.sun.tools.javac.code.Symbol;
 import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
@@ -9,8 +10,6 @@ import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
-
-import javax.annotation.processing.Messager;
 
 /**
  * Basically a javadoc'd version of the TreeMaker -- also exposes some environment methods
@@ -43,6 +42,10 @@ public class TreeFactory { //TODO: This class should handle more things and it s
 
     public JCIdent Ident(String name) {
         return Ident(getName(name));
+    }
+
+    public JCIdent Ident(Symbol symbol) {
+        return maker.Ident(symbol);
     }
 
     public JCLiteral Null() {
