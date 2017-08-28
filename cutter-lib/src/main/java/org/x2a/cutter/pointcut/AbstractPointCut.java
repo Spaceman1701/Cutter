@@ -9,12 +9,24 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Basic implementation of {@link PointCut}. Adds useful utility methods.
+ * @param <RETURN_TYPE> THe return type of functions targeted by this PointCut.
+ */
 public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE> {
 
+    /**
+     * All implementations <b>must</b> have a constructor with this signature.
+     * @param joinPoint The joinPoint information (class and method names)
+     * @param parameters the targeted method's parameters
+     */
     public AbstractPointCut(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
     }
 
+    /**
+     * Get a parameter by its declared name
+     */
     protected Parameter getParameter(String name) {
         for (int i = 0; i < parameterCount(); i++) {
             if (getParameter(i).getName().equals(name)) {
@@ -24,6 +36,11 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
         return null;
     }
 
+    /**
+     * get a parameter value with a known clazz type
+     * @param clazz the type of the parameter
+     * @param name the name of the parameter
+     */
     @SuppressWarnings("unchecked")
     protected <T> T getParameterValue(Class<? extends T> clazz, String name) {
         for (int i = 0; i < parameterCount(); i++) {
@@ -35,6 +52,11 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
         return null;
     }
 
+    /**
+     * Get the list of parameters with the given type
+     * @param clazz the class type of the parameters
+     * @return the list of parameters
+     */
     protected List<Parameter> getParameters(Class<?> clazz) {
         List<Parameter> parameters = new ArrayList<>();
         for (int i = 0; i < parameterCount(); i++) {
@@ -45,6 +67,10 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
         return parameters;
     }
 
+    /**
+     * Get an array of the parameter types
+     * @return An array of parameter types in the same order as the parameter array
+     */
     protected Class<?>[] getParameterTypes() {
         Class<?>[] types = new Class[parameterCount()];
         for (int i = 0; i < parameterCount(); i++) {
@@ -53,6 +79,11 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
         return types;
     }
 
+    /**
+     * Get an annotation present on the targeted method - use this for Pointcut parameters
+     * @param annotation the annotation class
+     * @return The annotation, or <code>null</code> if not present
+     */
     protected <A extends Annotation> A getMethodAnnotation(Class<A> annotation) {
         try {
             Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getMethodName(), getParameterTypes());
