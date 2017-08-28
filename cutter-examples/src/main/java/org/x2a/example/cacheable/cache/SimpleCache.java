@@ -1,4 +1,4 @@
-package org.x2a.example.cacheable.cahce;
+package org.x2a.example.cacheable.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 

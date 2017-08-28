@@ -1,8 +1,8 @@
 package org.x2a.example.cacheable;
 
 import org.x2a.cutter.annotation.Cut;
-import org.x2a.example.cacheable.cahce.CacheParams;
-import org.x2a.example.cacheable.cahce.Cacheable;
+import org.x2a.example.cacheable.cache.CacheParams;
+import org.x2a.example.cacheable.cache.Cacheable;
 
 public class Library {
 
