@@ -23,8 +23,6 @@ class Utils {
                 if (type.toString().equals(annotation.getName())) {
                     return jcAnnotation;
                 }
-            } else if (jcAnnotation.annotationType.toString().equals(annotation.getSimpleName())) {
-                throw new CutterCompileException("Invalid Cut annotation location! (or another annotation has the simple name 'Cut', which is not currently supported");
             }
         }
         return null;

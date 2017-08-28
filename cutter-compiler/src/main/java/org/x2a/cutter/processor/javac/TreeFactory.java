@@ -1,5 +1,6 @@
 package org.x2a.cutter.processor.javac;
 
+import com.sun.tools.javac.code.Symbol;
 import com.sun.tools.javac.code.TypeTag;
 import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
@@ -43,6 +44,10 @@ public class TreeFactory { //TODO: This class should handle more things and it s
 
     public JCIdent Ident(String name) {
         return Ident(getName(name));
+    }
+
+    public JCIdent Ident(Symbol symbol) {
+        return maker.Ident(symbol);
     }
 
     public JCLiteral Null() {

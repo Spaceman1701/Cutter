@@ -28,7 +28,7 @@ public class TestAbstractPointCut {
 
         @Override
         public String after(String returnValue) {
-            return ((TestAnnotation)getMethodAnnotation(TestAnnotation.class)).value();
+            return getMethodAnnotation(TestAnnotation.class).value();
         }
 
         @Override

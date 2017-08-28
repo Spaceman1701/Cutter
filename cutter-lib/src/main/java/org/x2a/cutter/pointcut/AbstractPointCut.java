@@ -53,7 +53,7 @@ public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE
         return types;
     }
 
-    protected Annotation getMethodAnnotation(Class<? extends Annotation> annotation) {
+    protected <A extends Annotation> A getMethodAnnotation(Class<A> annotation) {
         try {
             Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getMethodName(), getParameterTypes());
             return method.getDeclaredAnnotation(annotation);
