@@ -12,12 +12,12 @@ import org.x2a.cutter.processor.javac.TreeFactory;
 public abstract class WrapperBodyCreator {
     protected static final String POINT_CUT_VAR_NAME = Constants.GENERATED_VAR_PREFIX + "pointCut";
 
-    protected final JCNewClass pointCutClass;
-    protected final TreeFactory factory;
-    protected final Name wrappedMethodName;
-    protected final List<JCVariableDecl> params;
+    private final JCNewClass pointCutClass;
+    private final TreeFactory factory;
+    private final Name wrappedMethodName;
+    private final List<JCVariableDecl> params;
 
-    public WrapperBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName, List<JCVariableDecl> params) {
+    protected WrapperBodyCreator(TreeFactory factory, JCNewClass pointCutClass, Name wrappedMethodName, List<JCVariableDecl> params) {
         this.pointCutClass = pointCutClass;
         this.factory = factory;
         this.wrappedMethodName = wrappedMethodName;
@@ -40,7 +40,7 @@ public abstract class WrapperBodyCreator {
         return factory.createMethodInvocation(factory.List(), factory.Ident(wrappedMethodName), createMethodCallParams()); //TODO: args
     }
 
-    protected List<JCExpression> createMethodCallParams() {
+    private List<JCExpression> createMethodCallParams() {
         List<JCExpression> result = factory.List();
         for (int i = 0; i < params.length(); i++) {
             JCTree type = params.get(i).vartype;
