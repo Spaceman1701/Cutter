@@ -19,7 +19,7 @@ Java security manager can be activated without interfering with Pointcuts.
 
 ## Interoperability
 Since cutter uses facade methods to do method invocation interception, Pointcuts have no special runtime requirements.
-This means that code that uses Cutter is standard java code that is fully compatible with any other Java library.
+This means that code that uses Cutter is standard java code that is fully compatible with any other Java library and with any JVM.
 
 # Example
 
