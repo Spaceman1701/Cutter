@@ -5,6 +5,7 @@ like AspectJ, Cutter does't require a special compiler or heavy runtime dependen
 minimal "magic" code. 
 
 # Features
+Cutter is available for Java 8.
 ## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax or config files are required. 
 ## Performance
