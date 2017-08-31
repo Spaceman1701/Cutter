@@ -5,6 +5,7 @@ like AspectJ, Cutter does't require a special compiler or heavy runtime dependen
 minimal "magic" code. 
 
 Cutter is available for Java 8.
+
 # Features
 ## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax or config files are required.
@@ -87,3 +88,6 @@ that it will work on any given JDK. Cutter uses a "hack" similar to [project lom
     * Java does not support method annotation inheritence, so Cuts should be placed on concrete classes when possible
     * When making a call to 'super,' Cuts placed on the supermethod will be triggered.
     * Furthermore, abstract method's cannot be marked with Cut because it would cause invalid code to be generated. This may be fixed in a future version
+    
+# More Info
+(Read more about Cutter)[https://spaceman1701.github.io/2017/08/31/Cutter-Goals/] on my dev blog
