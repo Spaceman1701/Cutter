@@ -30,14 +30,14 @@ class PointCutCreator {
 
     /*
     None void methods:
-        PointCut pointCut = new PointCut();
+        Advice pointCut = new Advice();
         if (pointCut.before()) {
             return pointCut.after(__wrapped_methodName());
         }
         return pointCut.onSkip();
 
      void methods:
-        PointCut pointCut = new PointCut();
+        Advice pointCut = new Advice();
         if (pointCut.before()) {
             __wrapped_methodName()
             pointCut.after(null);

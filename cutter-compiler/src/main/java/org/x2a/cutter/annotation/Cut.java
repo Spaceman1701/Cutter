@@ -1,8 +1,8 @@
 package org.x2a.cutter.annotation;
 
+import org.x2a.cutter.cut.Advice;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
-import org.x2a.cutter.cut.PointCut;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
 public @interface Cut {
-    Class<? extends PointCut> value();
+    Class<? extends Advice> value();
 
     final class Utils { //this class exists to solve potential import problems
         public static Parameter wrapParameter(final String name, final Class<?> clazz, final Object val) {

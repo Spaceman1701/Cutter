@@ -2,9 +2,9 @@ package org.x2a.example.cacheable.cache;
 
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
-import org.x2a.cutter.pointcut.AbstractPointCut;
+import org.x2a.cutter.pointcut.AbstractAdvice;
 
-public class Cacheable extends AbstractPointCut<Object> {
+public class Cacheable extends AbstractAdvice<Object> {
 
     private final String cacheKey;
 

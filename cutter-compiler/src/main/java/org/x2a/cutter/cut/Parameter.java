@@ -1,7 +1,7 @@
 package org.x2a.cutter.cut;
 
 /**
- * Method arguments are passed to the {@link PointCut} as an array of Parameters. The Parameter object contains the parameter's
+ * Method arguments are passed to the {@link Advice} as an array of Parameters. The Parameter object contains the parameter's
  * declared name, actual class, and original value (the value the parameter had when the method was called). The Parameter object
  * also contains the "current" value of the parameter, which can be mutated by a Pointcut.
  */
@@ -51,7 +51,7 @@ public class Parameter {
     }
 
     /**
-     * Set the current value of the parameter. If called in the {@link PointCut#before()} method, the new value of this
+     * Set the current value of the parameter. If called in the {@link Advice#before()} method, the new value of this
      * parameter will be used when the intercepted method is executed. Calling this method does not change the result of
      * {@link Parameter#getOriginalValue()}
      * <p>

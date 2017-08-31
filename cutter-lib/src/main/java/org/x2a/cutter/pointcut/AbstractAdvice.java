@@ -1,8 +1,8 @@
 package org.x2a.cutter.pointcut;
 
+import org.x2a.cutter.cut.Advice;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
-import org.x2a.cutter.cut.PointCut;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Basic implementation of {@link PointCut}. Adds useful utility methods.
- * @param <RETURN_TYPE> THe return type of functions targeted by this PointCut.
+ * Basic implementation of {@link Advice}. Adds useful utility methods.
+ * @param <RETURN_TYPE> THe return type of functions targeted by this Advice.
  */
-public abstract class AbstractPointCut<RETURN_TYPE> extends PointCut<RETURN_TYPE> {
+public abstract class AbstractAdvice<RETURN_TYPE> extends Advice<RETURN_TYPE> {
 
     /**
      * All implementations <b>must</b> have a constructor with this signature.
      * @param joinPoint The joinPoint information (class and method names)
      * @param parameters the targeted method's parameters
      */
-    public AbstractPointCut(JoinPoint joinPoint, Parameter[] parameters) {
+    public AbstractAdvice(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
     }
 

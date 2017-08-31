@@ -4,17 +4,17 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 
 /**
- * Abstract PointCut implementation for use with void-returning methods. See {@link AbstractPointCut}
+ * Abstract Advice implementation for use with void-returning methods. See {@link AbstractAdvice}
  */
-public abstract class VoidPointCut extends AbstractPointCut<Void> {
-    public VoidPointCut(JoinPoint joinPoint, Parameter[] parameters) {
+public abstract class VoidAdvice extends AbstractAdvice<Void> {
+    public VoidAdvice(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
     }
 
     /**
      * Called after method invocation
      * <p>
-     * See {@link AbstractPointCut#after(Object)} ()}
+     * See {@link AbstractAdvice#after(Object)} ()}
      */
     public abstract void after();
     @Override
@@ -24,9 +24,9 @@ public abstract class VoidPointCut extends AbstractPointCut<Void> {
     }
 
     /**
-     * Called when the method invocation is skipped (i.e. when {@link AbstractPointCut#before()} returns <code>true</code>)s
+     * Called when the method invocation is skipped (i.e. when {@link AbstractAdvice#before()} returns <code>true</code>)s
      * <p>
-     * See {@link AbstractPointCut#onSkip()}
+     * See {@link AbstractAdvice#onSkip()}
      */
     public abstract void skip();
     @Override

@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.x2a.cutter.annotation.Cut;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
-import org.x2a.cutter.pointcut.AbstractPointCut;
+import org.x2a.cutter.pointcut.AbstractAdvice;
 
 import java.lang.reflect.Method;
 
@@ -16,7 +16,7 @@ public class TestCompoundAccess {
             static class WrapperThree {
                 static class WrapperFour {
                     static class WrapperFive {
-                        static class TestPC extends AbstractPointCut<String> {
+                        static class TestPC extends AbstractAdvice<String> {
                             public TestPC(JoinPoint joinPoint, Parameter[] parameters) {
                                 super(joinPoint, parameters);
                             }

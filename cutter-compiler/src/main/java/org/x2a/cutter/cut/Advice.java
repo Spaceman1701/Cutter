@@ -1,7 +1,7 @@
 package org.x2a.cutter.cut;
 
 /**
- * Base interface for defining PointCut objects (see {@link org.x2a.cutter.annotation.Cut}).
+ * Base interface for defining Advice objects (see {@link org.x2a.cutter.annotation.Cut}).
  * <p>
  * The return type should be specified by the implementation. Use {@link Void} for void return types
  * </p>
@@ -9,7 +9,7 @@ package org.x2a.cutter.cut;
  * Input parameters and return values follow Java's type casting and boxing rules
  * </p>
  */
-public abstract class PointCut<RETURN_TYPE> {
+public abstract class Advice<RETURN_TYPE> {
 
     protected final JoinPoint joinPoint;
     private final Parameter[] parameters;
@@ -18,7 +18,7 @@ public abstract class PointCut<RETURN_TYPE> {
      * @param joinPoint the join point where this point cut was created
      * @param parameters the parameters passed to the method
      */
-    public PointCut(final JoinPoint joinPoint, Parameter[] parameters) {
+    public Advice(final JoinPoint joinPoint, Parameter[] parameters) {
         this.joinPoint = joinPoint;
         this.parameters = parameters;
     }
@@ -48,14 +48,14 @@ public abstract class PointCut<RETURN_TYPE> {
     public abstract boolean before();
 
     /**
-     * Executed after the method the PointCut targets is called (and after the stack frame is cleared)
+     * Executed after the method the Advice targets is called (and after the stack frame is cleared)
      * @return The value to be returned by the method call. Use {@link Void} for void methods. The return of this method will
      * undergo a static cast to the return type of the method being wrapped.
      */
     public abstract RETURN_TYPE after(RETURN_TYPE returnValue);
 
     /**
-     * Called iff {@link PointCut#before()} returns <code>false</code>. Use this method to add a default return value
+     * Called iff {@link Advice#before()} returns <code>false</code>. Use this method to add a default return value
      * if required.
      * @return The value to be returned by the method call
      */
