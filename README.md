@@ -9,7 +9,7 @@ Cutter is available for Java 8.
 ## Simplicity
 Cutter currently supports Pointcuts targeting instance methods using annotations. No special syntax or config files are required.
 
-Cutter also doesn't have any complex runtime. Not even a special classloader or a Java agent.
+Cutter also does not have any complex runtime. Not even a special classloader or a Java agent.
 ## Performance
 Since cutter creates Pointcuts completely at compile time and does not depend on reflection, it has a minimal performance impact.
 ## Security
@@ -26,12 +26,12 @@ This means that code that uses Cutter is standard java code that is fully compat
 
 # Example
 
-To use cutter, you first have to create an concrete implementation of the ```PointCut``` abstract class. Then you have to
+To use cutter, you first have to create an concrete implementation of the ```Advice``` abstract class. Then you have to
 annotate your methods with ```@Cut```
 
-A Pointcut is a plain old java object:
+An Advice is a plain old java object:
 ````java
-class MyPointCut extends AbstractPointCut<Object> {
+class MyAdvice extends AbstractAdvice<Object> {
     
     public MyPointCut(JoinPoint joinPoint, Parameter[] parameters) {
         super(joinPoint, parameters);
@@ -56,7 +56,7 @@ class MyPointCut extends AbstractPointCut<Object> {
     
    /**
    * onSkip() is called when the intercepted method is skipped.
-   * tgus allows a default behavior to be defined.
+   * this allows a default behavior to be defined.
    */
     @Override
     public Object onSkip() {
@@ -69,7 +69,7 @@ Using this point cut is simple:
 
 ```java
 public class foobar {
-    @Cut(MyPointCut.class)
+    @Cut(MyAdvice.class)
     public Object foo(String user) {
         System.out.println("super secure info");
     }
