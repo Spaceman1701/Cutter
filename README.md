@@ -90,4 +90,4 @@ that it will work on any given JDK. Cutter uses a "hack" similar to [project lom
     * Furthermore, abstract method's cannot be marked with Cut because it would cause invalid code to be generated. This may be fixed in a future version
     
 # More Info
-(Read more about Cutter)[https://spaceman1701.github.io/2017/08/31/Cutter-Goals/] on my dev blog
+[Read more about Cutter](https://spaceman1701.github.io/2017/08/31/Cutter-Goals/) on my dev blog
