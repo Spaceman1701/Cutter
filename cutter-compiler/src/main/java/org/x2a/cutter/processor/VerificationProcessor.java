@@ -53,7 +53,8 @@ public class VerificationProcessor extends AbstractProcessor {
             Set<TypeMirror> annotations = buildTypeMirrorSet(e.getAnnotationMirrors());
             for (TypeMirror required : requiredAnnotations) {
                 if (!annotations.contains(required)) {
-                    throw new CutterCompileException("missing required annotation: " + required);
+                    throw new CutterCompileException(e + " is missing required annotation: " +
+                            required + " as required by " + advice);
                 }
             }
         }
