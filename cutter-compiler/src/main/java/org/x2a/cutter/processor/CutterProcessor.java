@@ -51,7 +51,7 @@ public class CutterProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         try {
-            verifyCuts(roundEnv, createRequirementMap(roundEnv));
+            verifyCuts(roundEnv);
             if (!roundEnv.processingOver()) {
                 Set<? extends Element> elements = roundEnv.getRootElements();
                 for (Element e : elements) {
@@ -67,25 +67,7 @@ public class CutterProcessor extends AbstractProcessor {
         return false;
     }
 
-    private RequirementMap createRequirementMap(RoundEnvironment env) {
-        RequirementMap map = new RequirementMap();
-        Symbol.ClassSymbol adviceBaseType = javacEnv.getElementUtils().getTypeElement("org.x2a.cutter.cut.Advice");
-        for (Element e : env.getElementsAnnotatedWith(RequiredAnnotations.class)) {
-            if (e.getKind() != ElementKind.CLASS) {
-                throw new CutterCompileException("@RequiredAnnotations must be placed on a class!");
-            }
-            TypeMirror typeMirror = e.asType();
-            Symbol.ClassSymbol clazzSym = (Symbol.ClassSymbol) e;
-            if (!clazzSym.isSubClass(adviceBaseType, Types.instance(javacEnv.getContext()))) {
-                throw new CutterCompileException("@RequiredAnnotations must be placed on an Advice class");
-            }
-            RequiredAnnotations annotation = e.getAnnotation(RequiredAnnotations.class);
-            map.putAll(typeMirror, getValue(annotation));
-        }
-        return map;
-    }
-
-    public void verifyCuts(RoundEnvironment env, RequirementMap requirementMap) {
+    public void verifyCuts(RoundEnvironment env) {
         for (Element e : env.getElementsAnnotatedWith(Cut.class)) {
             if (e.getKind() == ElementKind.METHOD) {
                 Symbol.MethodSymbol methodSymbol = (Symbol.MethodSymbol) e;
@@ -98,47 +80,12 @@ public class CutterProcessor extends AbstractProcessor {
                 }
                 //TODO: currently impossible to find anonymous classes
 
-                Cut cut = e.getAnnotation(Cut.class);
-                TypeMirror advice = getTypeMirror(cut);
-                List<? extends TypeMirror> requiredAnnotations = requirementMap.getRequiredAnnotations(advice);
-                Set<TypeMirror> annotations = buildTypeMirrorSet(e.getAnnotationMirrors());
-                for (TypeMirror required : requiredAnnotations) {
-                    if (!annotations.contains(required)) {
-                        throw new CutterCompileException("missing required annotation: " + required);
-                    }
-                }
-
-
             } else {
                 throw new CutterCompileException(e.getSimpleName() + " is annotated with Cut, but Cut only applies to methods");
             }
         }
     }
 
-    private Set<TypeMirror> buildTypeMirrorSet(List<? extends AnnotationMirror> annotationMirrors) {
-        Set<TypeMirror> mirrors = new HashSet<>();
-        for (AnnotationMirror am : annotationMirrors) {
-            mirrors.add(am.getAnnotationType());
-        }
-        return mirrors;
-    }
-
-    private TypeMirror getTypeMirror(Cut cutProxy) {
-        try {
-            return javacEnv.getElementUtils().getTypeElement(cutProxy.value().getCanonicalName()).asType();
-        } catch (MirroredTypeException e) {
-            return e.getTypeMirror();
-        }
-    }
-    //TODO: both these methods can be replaced by annoying logic that doesn't involve exceptions
-    private List<? extends TypeMirror> getValue(RequiredAnnotations annotationProxy) {
-        try {
-            annotationProxy.value();
-        } catch (MirroredTypesException e) {
-            return e.getTypeMirrors();
-        }
-        return null;
-    }
 
 
 
