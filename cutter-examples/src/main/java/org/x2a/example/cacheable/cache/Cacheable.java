@@ -1,11 +1,12 @@
 package org.x2a.example.cacheable.cache;
 
+import org.x2a.cutter.annotation.Cut;
 import org.x2a.cutter.annotation.RequiredAnnotations;
 import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.pointcut.AbstractAdvice;
 
-@RequiredAnnotations(CacheParams.class)
+@RequiredAnnotations({CacheParams.class, Foo.class})
 public class Cacheable extends AbstractAdvice<Object> {
 
     private final String cacheKey;
