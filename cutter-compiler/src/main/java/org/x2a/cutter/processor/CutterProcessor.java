@@ -73,15 +73,15 @@ public class CutterProcessor extends AbstractProcessor {
                 Symbol.MethodSymbol methodSymbol = (Symbol.MethodSymbol) e;
                 Symbol parent = methodSymbol.owner;
                 if (parent.getKind() != ElementKind.CLASS) {
-                    throw new CutterCompileException("Cut at " + parent.getSimpleName() + "::" + e.getSimpleName() + " is invalid. Cuts must be placed on Classes");
+                    throw new CutterCompileException("Cut at " + parent + "::" + e + " is invalid. Cuts must be placed on Classes");
                 }
                 if (methodSymbol.getModifiers().contains(Modifier.ABSTRACT)) {
-                    throw new CutterCompileException("Cut at " + parent.getSimpleName() + "::" + e.getSimpleName() + " is invalid. Cuts cannot be placed on abstract methods");
+                    throw new CutterCompileException("Cut at " + parent + "::" + e + " is invalid. Cuts cannot be placed on abstract methods");
                 }
                 //TODO: currently impossible to find anonymous classes
 
             } else {
-                throw new CutterCompileException(e.getSimpleName() + " is annotated with Cut, but Cut only applies to methods");
+                throw new CutterCompileException(e + " is annotated with Cut, but @Cut only applies to methods");
             }
         }
     }
