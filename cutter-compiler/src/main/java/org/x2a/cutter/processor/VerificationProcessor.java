@@ -6,10 +6,8 @@ import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import org.x2a.cutter.annotation.Cut;
 import org.x2a.cutter.annotation.RequiredAnnotations;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -23,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @SupportedAnnotationTypes("org.x2a.cutter.annotation.RequiredAnnotations")
+@SupportedSourceVersion(SourceVersion.RELEASE_0)
 public class VerificationProcessor extends AbstractProcessor {
 
     private JavacProcessingEnvironment javacEnv;
