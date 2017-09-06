@@ -6,7 +6,7 @@ import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 import org.x2a.cutter.pointcut.AbstractAdvice;
 
-@RequiredAnnotations({CacheParams.class, Foo.class})
+@RequiredAnnotations(CacheParams.class)
 public class Cacheable extends AbstractAdvice<Object> {
 
     private final String cacheKey;
