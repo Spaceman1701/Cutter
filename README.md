@@ -91,5 +91,7 @@ that it will work on any given JDK. Cutter uses a "hack" similar to [project lom
     
 # More Info
 Read more about Cutter on my dev blog:
+
 [Part 1 - Motivation and Goals](https://spaceman1701.github.io/2017/08/31/Cutter-Goals/)
+
 [Part 2 - High Level Design](https://spaceman1701.github.io/2017/09/05/Cutter-Design/)
