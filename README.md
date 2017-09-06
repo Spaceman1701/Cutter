@@ -1,4 +1,4 @@
-# Cutter
+# Cutter, the Minimal Java AOP Library
 Cutter is an open source, lightweight, and fast java library for basic aspect oriented programming. As the name suggests,
 the primary feature of Cutter is the ability to add [Pointcuts](https://en.wikipedia.org/wiki/Pointcut) to java. Unlike libraries
 like AspectJ, Cutter does't require a special compiler or heavy runtime dependencies. Cutter is written in pure java with
