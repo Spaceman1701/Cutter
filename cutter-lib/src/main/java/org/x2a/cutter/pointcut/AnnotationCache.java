@@ -3,6 +3,7 @@ package org.x2a.cutter.pointcut;
 import org.x2a.cutter.cut.JoinPoint;
 
 import java.lang.annotation.Annotation;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class AnnotationCache {
 
@@ -19,7 +20,7 @@ public final class AnnotationCache {
 
         @Override
         public int hashCode() {
-            return joinPoint.hashCode() + annotationClass.hashCode();
+            return 37 * (joinPoint.hashCode() + annotationClass.hashCode());
         }
 
         @Override
@@ -32,7 +33,22 @@ public final class AnnotationCache {
         }
     }
 
-    private AnnotationCache() {
+    private final ConcurrentHashMap<CacheKey, Annotation> annotations;
 
+    private AnnotationCache() {
+        annotations = new ConcurrentHashMap<>();
+    }
+
+    void put(JoinPoint jp, Class<? extends Annotation> clazz, Annotation annotation) {
+        annotations.put(new CacheKey(jp, clazz), annotation);
+    }
+
+    @SuppressWarnings("unchecked")
+    <A extends Annotation> A get(JoinPoint jp, Class<A> annotation) {
+        return (A) annotations.get(new CacheKey(jp, annotation));
+    }
+
+    public static AnnotationCache getInstance() {
+        return INSTANCE;
     }
 }

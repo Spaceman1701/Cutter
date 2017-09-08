@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @param <RETURN_TYPE> THe return type of functions targeted by this Advice.
  */
 public abstract class AbstractAdvice<RETURN_TYPE> extends Advice<RETURN_TYPE> {
-    private static final ConcurrentHashMap<JoinPoint, Annotation> annotationCache = new ConcurrentHashMap<>();
     /**
      * All implementations <b>must</b> have a constructor with this signature.
      * @param joinPoint The joinPoint information (class and method names)
@@ -94,7 +93,12 @@ public abstract class AbstractAdvice<RETURN_TYPE> extends Advice<RETURN_TYPE> {
     }
 
     private <A extends Annotation> A getMethodAnnotationFast(Class<A> annotation) {
-        Annotation result = annotationCache.get(joinPoint);
+        A result = AnnotationCache.getInstance().get(joinPoint, annotation);
+        if (result == null) {
+            result = getMethodAnnotationSlow(annotation);
+            AnnotationCache.getInstance().put(joinPoint, annotation, result);
+        }
+        return result;
     }
 
     private <A extends Annotation> A getMethodAnnotationSlow(Class<A> annotation) {
