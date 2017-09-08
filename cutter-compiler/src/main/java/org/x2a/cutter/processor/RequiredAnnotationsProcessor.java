@@ -20,9 +20,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Handles the @RequiredAnnotations annotation. Builds a requirements map for every Advice object and checks all
+ * usages for conformity
+ */
 @SupportedAnnotationTypes("org.x2a.cutter.annotation.RequiredAnnotations")
 @SupportedSourceVersion(SourceVersion.RELEASE_0)
-public class VerificationProcessor extends AbstractProcessor {
+public class RequiredAnnotationsProcessor extends AbstractProcessor {
 
     private JavacProcessingEnvironment javacEnv;
     @Override

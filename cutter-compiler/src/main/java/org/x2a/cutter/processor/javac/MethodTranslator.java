@@ -9,7 +9,7 @@ import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.Constants;
 import org.x2a.cutter.annotation.Cut;
 
-public class MethodTranslator extends TreeTranslator {
+public class MethodTranslator extends TreeTranslator { //TODO: Target for refactor
 
     private final TreeFactory factory;
 

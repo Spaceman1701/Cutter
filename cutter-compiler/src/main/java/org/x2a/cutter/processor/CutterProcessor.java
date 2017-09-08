@@ -67,7 +67,7 @@ public class CutterProcessor extends AbstractProcessor {
         return false;
     }
 
-    public void verifyCuts(RoundEnvironment env) {
+    public void verifyCuts(RoundEnvironment env) { //TODO: Target for refactor
         for (Element e : env.getElementsAnnotatedWith(Cut.class)) {
             if (e.getKind() == ElementKind.METHOD) {
                 Symbol.MethodSymbol methodSymbol = (Symbol.MethodSymbol) e;
