@@ -11,6 +11,7 @@
     <modules>
         <module>cutter-compiler</module>
         <module>cutter-lib</module>
+        <module>cutter-examples</module>
     </modules>
 
 

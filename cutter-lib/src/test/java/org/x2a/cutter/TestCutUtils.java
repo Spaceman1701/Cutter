@@ -3,6 +3,7 @@ package org.x2a.cutter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.x2a.cutter.annotation.Cut;
+import org.x2a.cutter.cut.JoinPoint;
 import org.x2a.cutter.cut.Parameter;
 
 public class TestCutUtils {
@@ -27,5 +28,16 @@ public class TestCutUtils {
         Assert.assertEquals("foobar", parameters[2].getOriginalValue());
 
         Assert.assertEquals(parameters[0].getCurrentValue(), parameters[0].getOriginalValue());
+    }
+
+
+    @Test
+    public void testCreateJoinPoint() {
+        JoinPoint jp = Cut.Utils.createJoinPoint(this.getClass(), "test");
+        Assert.assertNotNull(jp);
+
+        Assert.assertEquals(this.getClass(), jp.getClazz());
+        Assert.assertEquals("test", jp.getMethodName());
+        Assert.assertEquals(Constants.METHOD_WRAPPED_PREFIX + "test", jp.getRealMethodName());
     }
 }

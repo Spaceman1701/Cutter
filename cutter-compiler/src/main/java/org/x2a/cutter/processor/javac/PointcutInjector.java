@@ -9,11 +9,14 @@ import com.sun.tools.javac.util.Name;
 import org.x2a.cutter.Constants;
 import org.x2a.cutter.annotation.Cut;
 
-public class MethodTranslator extends TreeTranslator {
+/**
+ * Responsible for injecting Pointcuts into the AST
+ */
+public class PointcutInjector extends TreeTranslator { //TODO: Target for refactor
 
     private final TreeFactory factory;
 
-    public MethodTranslator(TreeFactory factory) {
+    public PointcutInjector(TreeFactory factory) {
         this.factory = factory;
     }
 
