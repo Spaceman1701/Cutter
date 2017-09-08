@@ -8,13 +8,14 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Basic implementation of {@link Advice}. Adds useful utility methods.
  * @param <RETURN_TYPE> THe return type of functions targeted by this Advice.
  */
 public abstract class AbstractAdvice<RETURN_TYPE> extends Advice<RETURN_TYPE> {
-
+    private static final ConcurrentHashMap<JoinPoint, Annotation> annotationCache = new ConcurrentHashMap<>();
     /**
      * All implementations <b>must</b> have a constructor with this signature.
      * @param joinPoint The joinPoint information (class and method names)
@@ -85,6 +86,18 @@ public abstract class AbstractAdvice<RETURN_TYPE> extends Advice<RETURN_TYPE> {
      * @return The annotation, or <code>null</code> if not present
      */
     protected <A extends Annotation> A getMethodAnnotation(Class<A> annotation) {
+        return getMethodAnnotation(annotation, true);
+    }
+
+    protected <A extends Annotation> A getMethodAnnotation(Class<A> annotation, boolean useCache) {
+        return useCache ? getMethodAnnotationFast(annotation) : getMethodAnnotationSlow(annotation);
+    }
+
+    private <A extends Annotation> A getMethodAnnotationFast(Class<A> annotation) {
+        Annotation result = annotationCache.get(joinPoint);
+    }
+
+    private <A extends Annotation> A getMethodAnnotationSlow(Class<A> annotation) {
         try {
             Method method = joinPoint.getClazz().getDeclaredMethod(joinPoint.getMethodName(), getParameterTypes());
             return method.getDeclaredAnnotation(annotation);
