@@ -1,34 +1,23 @@
 package org.x2a.cutter.processor;
 
 import com.sun.source.util.Trees;
-import com.sun.tools.internal.xjc.reader.TypeUtil;
 import com.sun.tools.javac.code.Symbol;
-import com.sun.tools.javac.code.Type;
-import com.sun.tools.javac.code.Types;
-import com.sun.tools.javac.model.JavacElements;
 import com.sun.tools.javac.processing.JavacProcessingEnvironment;
 import com.sun.tools.javac.tree.JCTree;
-import com.sun.tools.javac.tree.TreeMaker;
 import com.sun.tools.javac.tree.TreeTranslator;
 import org.x2a.cutter.annotation.Cut;
-import org.x2a.cutter.annotation.RequiredAnnotations;
-import org.x2a.cutter.cut.Advice;
-import org.x2a.cutter.processor.javac.MethodTranslator;
+import org.x2a.cutter.processor.javac.PointcutInjector;
 import org.x2a.cutter.processor.javac.TreeFactory;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
-import javax.lang.model.type.MirroredTypeException;
-import javax.lang.model.type.MirroredTypesException;
-import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic;
-import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+/**
+ * Processor responsible for making AST modifications
+ */
 @SupportedAnnotationTypes("org.x2a.cutter.annotation.Cut")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class CutterProcessor extends AbstractProcessor {
@@ -45,7 +34,7 @@ public class CutterProcessor extends AbstractProcessor {
         this.trees = Trees.instance(javacEnv);
         TreeFactory treeFactory = new TreeFactory(javacEnv);
 
-        treeTranslator = new MethodTranslator(treeFactory);
+        treeTranslator = new PointcutInjector(treeFactory);
     }
 
     @Override
