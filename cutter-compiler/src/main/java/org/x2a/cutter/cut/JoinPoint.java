@@ -42,4 +42,18 @@ public class JoinPoint {
     public String getRealMethodName() {
         return realMethodName;
     }
+
+    @Override
+    public int hashCode() {
+        return 37 * (methodName.hashCode() + clazz.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other != null && other.getClass().equals(this.getClass())) {
+            JoinPoint otherJp = (JoinPoint) other;
+            return this.methodName.equals(otherJp.methodName) && this.clazz.equals(otherJp.clazz);
+        }
+        return false;
+    }
 }

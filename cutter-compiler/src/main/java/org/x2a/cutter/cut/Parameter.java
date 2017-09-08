@@ -71,4 +71,19 @@ public class Parameter {
     public Object getOriginalValue() {
         return originalValue;
     }
+
+    @Override
+    public int hashCode() {
+        return 37 * (name.hashCode() + clazz.hashCode() + originalValue.hashCode() + currentValue.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other != null && other.getClass().equals(this.getClass())) {
+            Parameter otherP = (Parameter) other;
+            return otherP.name.equals(name) && otherP.clazz.equals(clazz)
+                    && otherP.originalValue.equals(originalValue) && otherP.currentValue.equals(currentValue);
+        }
+        return false;
+    }
 }
