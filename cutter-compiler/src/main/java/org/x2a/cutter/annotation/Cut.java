@@ -6,6 +6,12 @@ import org.x2a.cutter.cut.Parameter;
 
 import java.lang.annotation.*;
 
+/**
+ * Add to a method to create a Pointcut that will intercept program execution and trigger the corresponding
+ * {@link Advice} methods.
+ * <p>
+ * <bold>DOES NOT SUPPORT ANONYMOUS INNER CLASSES</bold>
+ */
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
